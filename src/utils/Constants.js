@@ -1,0 +1,15 @@
+export const _EMAIL = "email";
+export const _PASSWORD = "password";
+export const _MEDIUM = "medium";
+export const _OUTLINE = "outlined";
+export const _SECONDARY = "secondary";
+export const _SUBMIT = "submit";
+export const _SMALL = "small";
+export const _PRIMARY = "primary";
+export const _CONTAINED = "contained";
+export const _SUCCESS = "success";
+export const _ERROR = "error";
+export const _NAME = "name";
+export const _CONFIRMPASSWORD = "confirmpassword";
+export const _PHONENO = "phoneno";
+export const API_KEY = "80a37e80faf0e3803564f2df1ffcbb56";
