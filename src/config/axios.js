@@ -8,7 +8,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use((req) => {
   if (localStorage.getItem("profile")) {
-    const token = JSON.parse(localStorage.getItem("profile")).token;
+    const token = localStorage.getItem("profile").token;
     if (token) {
       const userToken = jwt_decode(token);
       const isExpired = userToken.exp * 1000 > Date.now();

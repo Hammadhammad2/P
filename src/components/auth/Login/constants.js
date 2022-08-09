@@ -1,0 +1,9 @@
+export const _LOGIN_TO_YOUR_ACCOUNT = "Login to your account";
+export const LOGIN = "Login";
+export const EMAIL = "Email*";
+export const PASSWORD = "Password*";
+export const SIGN_UP = "Sign up";
+export const EMAIL_NOT_FOUND = "Sorry E-mail not Found!";
+export const ENTER_EMAIL = "Enter your Email";
+export const ENTER_PASSWORD = "Enter your Password";
+export const LOGIN_SUCCESSFUL = "Logged In Successfully!";
