@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import LoginForm from "./loginForm";
 import AccountIcon from "../../../utils/icons";
 import { LoginInitialValues, LoginSchema } from "./helpers";
-import { _SUCCESS, _ERROR } from "../../../utils/Constants";
 import { Alert, Avatar, Grid, Paper, Typography } from "@mui/material";
 import { LOGIN_SUCCESSFUL } from "./constants";
 import { Formik } from "formik";

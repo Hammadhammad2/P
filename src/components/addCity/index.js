@@ -5,10 +5,10 @@ import { useDebounce } from "use-debounce";
 import { Paper, Button, Alert, Box, Stack, Divider } from "@mui/material";
 import { _ERROR } from "../../utils/Constants";
 import { Link } from "react-router-dom";
-import bgimage from "../../assets/img/image.jpg";
 import { getCitiesRequest } from "../../services/addCity";
 import { useMutation } from "@apollo/client";
 import { ADD_CITY } from "../../graphql/mutations";
+import { box1, box2 } from "../../styles.js";
 
 const City = () => {
   const user = localStorage.getItem("token");
@@ -18,14 +18,13 @@ const City = () => {
   const [location, setLocation] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [delayValue] = useDebounce(inputValue, 1000);
-  const [response, setResponse] = useState(null);
 
-  const [addCities, { data, loading, error }] = useMutation(ADD_CITY);
+  var [addCities, { data, loading, error }] = useMutation(ADD_CITY);
   if (loading) console.log(loading);
 
-  if (error) {
-    console.log({ error });
-  }
+  // if (error) {
+  //   console.log({ error });
+  // }
 
   const handleLogout = () => {
     localStorage.clear();
@@ -34,7 +33,9 @@ const City = () => {
 
   const changeResponse = () => {
     setTimeout(() => {
-      setResponse(null);
+      error = null;
+      console.log("inerror");
+      console.log(error);
       return;
     }, 3000);
   };
@@ -59,25 +60,8 @@ const City = () => {
   }, [delayValue]);
 
   return (
-    <Box
-      sx={{
-        backgroundImage: `url(${bgimage})`,
-        height: "100vh",
-
-        /* Center and scale the image nicely */
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundColor: "blue",
-      }}
-    >
-      <Box
-        sx={{
-          backgroundColor: "rgba(0, 0, 0, 0.4)",
-          padding: "200px 500px",
-          height: "100vh",
-        }}
-      >
+    <Box sx={box1}>
+      <Box sx={box2}>
         <Paper
           sx={{
             padding: "20px",
@@ -107,13 +91,6 @@ const City = () => {
                 }).then((res) => {
                   location.push(newValue);
                 });
-                // addCities(newValue)
-                //   .then((city) => {
-                //     location.push(newValue);
-                //   })
-                //   .catch((err) => {
-                //     setResponse(err);
-                //   });
               }
             }}
             inputValue={inputValue}
@@ -128,7 +105,7 @@ const City = () => {
               <TextField {...params} label="Search Location" />
             )}
           />
-          {response && (
+          {error && (
             <Box>
               {changeResponse()}
               <Alert
@@ -138,7 +115,7 @@ const City = () => {
                 }}
                 severity={_ERROR}
               >
-                {response}
+                {error.message}
               </Alert>
             </Box>
           )}

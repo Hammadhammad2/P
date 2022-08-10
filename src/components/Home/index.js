@@ -2,7 +2,7 @@ import React from "react";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import { Box, Button, Divider, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
-import { box1, box2 } from "./styles";
+import { box1, box2 } from "../../styles.js";
 
 const Home = () => {
   const user = localStorage.getItem("token");
