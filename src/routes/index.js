@@ -6,18 +6,16 @@ import Login from "../pages/auth/Login";
 import Home from "../pages/Home";
 import AddCity from "../pages/addCity";
 
-import { AuthenRoutes,ProtectedRoutes } from "./ProtectedRoutes";
-
+import { AuthenRoutes, ProtectedRoutes } from "./ProtectedRoutes";
 
 const AuthRoutes = () => {
-  const [user, setUser] =   useState(localStorage.getItem("profile"));
+  const [user, setUser] = useState(localStorage.getItem("token"));
   useEffect(() => {
-    setUser(localStorage.getItem("profile"));
+    setUser(localStorage.getItem("token"));
   }, []);
   return (
     <BrowserRouter>
-     <Routes>
-           
+      <Routes>
         <Route path="/" element={<Home />} />
 
         <Route
@@ -36,7 +34,7 @@ const AuthRoutes = () => {
             </AuthenRoutes>
           }
         />
-           <Route
+        <Route
           path="/addCity"
           element={
             <ProtectedRoutes loggedIn={user}>
@@ -44,12 +42,9 @@ const AuthRoutes = () => {
             </ProtectedRoutes>
           }
         />
-       
-
-    </Routes>
+      </Routes>
     </BrowserRouter>
-    
-   );
+  );
 };
 
 export default AuthRoutes;

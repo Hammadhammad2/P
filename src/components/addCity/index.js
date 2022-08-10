@@ -7,16 +7,25 @@ import { _ERROR } from "../../utils/Constants";
 import { Link } from "react-router-dom";
 import bgimage from "../../assets/img/image.jpg";
 import { getCitiesRequest } from "../../services/addCity";
-
+import { useMutation } from "@apollo/client";
+import { ADD_CITY } from "../../graphql/mutations";
 
 const City = () => {
-  const user = localStorage.getItem("profile").user;
+  const user = localStorage.getItem("token");
+  console.log(user);
 
   const [displayLocations, setDisplayLocations] = useState([]);
   const [location, setLocation] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [delayValue] = useDebounce(inputValue, 1000);
   const [response, setResponse] = useState(null);
+
+  const [addCities, { data, loading, error }] = useMutation(ADD_CITY);
+  if (loading) console.log(loading);
+
+  if (error) {
+    console.log({ error });
+  }
 
   const handleLogout = () => {
     localStorage.clear();
@@ -85,13 +94,19 @@ const City = () => {
 
               if (newValue) {
                 if (user) {
+                  console.log(user);
                   newValue["userId"] = user._id;
                 }
 
                 console.log(newValue);
-                location.push(newValue);
 
-
+                addCities({
+                  variables: {
+                    newCity: newValue,
+                  },
+                }).then((res) => {
+                  location.push(newValue);
+                });
                 // addCities(newValue)
                 //   .then((city) => {
                 //     location.push(newValue);
@@ -99,8 +114,6 @@ const City = () => {
                 //   .catch((err) => {
                 //     setResponse(err);
                 //   });
-
-                
               }
             }}
             inputValue={inputValue}

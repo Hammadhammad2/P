@@ -2,10 +2,10 @@ import React from "react";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import { Box, Button, Divider, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
-import { box1,box2 } from "./styles";
+import { box1, box2 } from "./styles";
 
 const Home = () => {
-  const user = (localStorage.getItem("profile"));
+  const user = localStorage.getItem("token");
   console.log(user);
 
   const handleLogout = () => {
@@ -14,12 +14,8 @@ const Home = () => {
   };
 
   return (
-    <Box
-      sx={box1}
-    >
-      <Box
-        sx={box2}
-      >
+    <Box sx={box1}>
+      <Box sx={box2}>
         <div className="d-flex justify-content-center align-items-center h-100 w-992px">
           <div className="text-white">
             <h1 style={{ fontSize: "6rem" }}>Weather Report</h1>

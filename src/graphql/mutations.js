@@ -10,11 +10,20 @@ export const SIGN_Up_USER = gql`
   }
 `;
 
-
 export const LOGIN_USER = gql`
   mutation LoginUser($newSignInUser: UserSigninInput) {
     user: SigninUser(newSignInUser: $newSignInUser) {
-    token
+      token
+    }
+  }
+`;
+
+export const ADD_CITY = gql`
+  mutation addCities($newCity: CityInput) {
+    cities: addCity(newCity: $newCity) {
+      label
+      lat
+      lon
     }
   }
 `;
