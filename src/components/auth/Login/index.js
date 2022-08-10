@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import LoginForm from "./loginForm";
-import  AccountIcon from "../../../utils/icons";
+import AccountIcon from "../../../utils/icons";
 import { LoginInitialValues, LoginSchema } from "./helpers";
 import { _SUCCESS, _ERROR } from "../../../utils/Constants";
 import { Alert, Avatar, Grid, Paper, Typography } from "@mui/material";
@@ -15,28 +15,22 @@ const headerStyle = { margin: 0 };
 const avatarStyle = { backgroundColor: "#1877f2" };
 
 const Login = () => {
- 
-   
-   const[LoginUser, { data, loading, error }] =useMutation(LOGIN_USER)
+  const [LoginUser, { data, loading, error }] = useMutation(LOGIN_USER);
 
-   if(data)
-   {
-    console.log(data.user.token)
-    localStorage.setItem("profile", data.user.token);
-   window.location.replace("/addCity");
-    
-   }
-   const SubmitForm = (data, { resetForm }) => {
-    console.log(data)
+  if (data) {
+    console.log(data.user.token);
+    localStorage.setItem("token", data.user.token);
+    window.location.replace("/addCity");
+  }
+  const SubmitForm = (data, { resetForm }) => {
+    console.log(data);
     LoginUser({
       variables: {
         newSignInUser: data,
       },
     });
-  resetForm({});
-  
+    resetForm({});
   };
-
 
   return (
     <>
@@ -58,48 +52,40 @@ const Login = () => {
               {(props) => {
                 return (
                   <>
-                    <LoginForm
-               
-                      {...props}
-                    />
+                    <LoginForm {...props} />
                   </>
                 );
               }}
             </Formik>
           </div>
           <div>
-          <Paper> 
-         
-          {data  && (
-         
-              <Alert
-                elevation={1}
-                sx={{
-                  mt: 2,
-                }}
-                variant="outlined" severity="success"
-              >
-                {LOGIN_SUCCESSFUL}
-                          </Alert>
-              
-            )}
-            
-
-            {error   && (
-              <Alert
-                elevation={1}
-                sx={{
-                  mt: 2,
-                }}
-                severity="error"
-              >
-                {error.message}
+            <Paper>
+              {data && (
+                <Alert
+                  elevation={1}
+                  sx={{
+                    mt: 2,
+                  }}
+                  variant="outlined"
+                  severity="success"
+                >
+                  {LOGIN_SUCCESSFUL}
                 </Alert>
-            )}
-            
-        
-          </Paper>
-        </div>
+              )}
+
+              {error && (
+                <Alert
+                  elevation={1}
+                  sx={{
+                    mt: 2,
+                  }}
+                  severity="error"
+                >
+                  {error.message}
+                </Alert>
+              )}
+            </Paper>
+          </div>
         </Paper>
       </Grid>
     </>
