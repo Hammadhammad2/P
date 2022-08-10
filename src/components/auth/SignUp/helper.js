@@ -6,14 +6,13 @@ export const SignUpInitialValues = {
   password: "",
   confirmpassword: "",
 };
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 export const SignUpSchema = Yup.object().shape({
   name: Yup.string().required("Please Enter your name"),
-  phoneno: Yup.number()
-    .typeError("That doesn't look like a phone number")
-    .positive("A phone number can't start with a minus")
-    .integer("A phone number can't include a decimal point")
-    .min(8)
+  phoneno: Yup.string()
+    .matches(phoneRegExp, "Phone number is not valid")
     .required("A phone number is required"),
   email: Yup.string()
     .email("Invalid email")
