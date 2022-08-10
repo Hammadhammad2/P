@@ -3,6 +3,12 @@ import TextField from "@mui/material/TextField";
 import { Autocomplete } from "@mui/material";
 import { useDebounce } from "use-debounce";
 import { Paper, Button, Alert, Box, Stack, Divider } from "@mui/material";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 import { _ERROR } from "../../utils/Constants";
 import { Link } from "react-router-dom";
 import { getCitiesRequest } from "../../services/addCity";
@@ -12,7 +18,6 @@ import { box1, box2 } from "../../styles.js";
 
 const City = () => {
   const user = localStorage.getItem("token");
-  console.log(user);
 
   const [displayLocations, setDisplayLocations] = useState([]);
   const [location, setLocation] = useState([]);
@@ -34,8 +39,7 @@ const City = () => {
   const changeResponse = () => {
     setTimeout(() => {
       error = null;
-      console.log("inerror");
-      console.log(error);
+
       return;
     }, 3000);
   };
@@ -76,22 +80,21 @@ const City = () => {
             onChange={(event, newValue) => {
               // setLocation(newValue);
 
-              if (newValue) {
-                if (user) {
-                  console.log(user);
-                  newValue["userId"] = user._id;
-                }
+              // if (newValue) {
+              //   if (user) {
+              //     console.log(user);
+              //     newValue["userId"] = user._id;
+              //   }
 
-                console.log(newValue);
+              console.log(newValue);
 
-                addCities({
-                  variables: {
-                    newCity: newValue,
-                  },
-                }).then((res) => {
-                  location.push(newValue);
-                });
-              }
+              addCities({
+                variables: {
+                  newCity: newValue,
+                },
+              }).then((res) => {
+                location.push(newValue);
+              });
             }}
             inputValue={inputValue}
             onInputChange={(event, newInputValue) => {
@@ -126,17 +129,6 @@ const City = () => {
           }}
           elevation={5}
         >
-          <h2
-            style={{
-              color: "#158FFA",
-              textAlign: "center",
-              bgcolor: "black",
-              font: "40px Open Sans bold",
-              border: " 1px solid #158FFA",
-            }}
-          >
-            Cities
-          </h2>
           <Box
             sx={{
               mb: 2,
@@ -149,24 +141,56 @@ const City = () => {
             }}
           >
             {location.length > 0 ? (
-              <Box sx={{ borderColor: "secondary.main" }}>
-                {location.map((loc, index) => (
-                  <h4
-                    style={{
-                      color: "#34495E",
-                      font: "Arial",
-                    }}
-                    key={index}
-                  >
-                    {loc.label}
-                  </h4>
-                ))}
-              </Box>
+              <TableContainer component={Box} elevation={6}>
+                <Table
+                  sx={{ minWidth: 500, fontSize: "10px" }}
+                  aria-label="simple table"
+                >
+                  <TableHead>
+                    <TableRow>
+                      <TableCell
+                        sx={{
+                          border: 1,
+                          fontSize: "20pt",
+                          backgroundColor: "primary",
+                        }}
+                        component="th"
+                      >
+                        City Names
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {location.map((loc, index) => (
+                      <TableRow
+                        key={index}
+                        sx={{
+                          "&:last-child td, &:last-child th": {
+                            mt: 2,
+                          },
+                        }}
+                      >
+                        <TableCell
+                          sx={{
+                            border: 0,
+                            mt: 2,
+                            backgroundColor: "#eeeeee",
+                          }}
+                        >
+                          {loc.label}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             ) : (
               <h4
                 style={{
-                  color: "#34495E",
-                  font: "Open Sans",
+                  color: "#ef5350",
+                  font: "Monospace",
+                  fontStyle: "italic",
+                  textAlign: "center",
                 }}
               >
                 No Cities Added
