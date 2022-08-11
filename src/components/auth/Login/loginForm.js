@@ -23,7 +23,7 @@ import { Grid, TextField, Button, Divider, Link } from "@mui/material";
 const LoginForm = (props) => {
   const { touched, errors, loading, values, handleSubmit } = props;
   return (
-    <Form onSubmit={handleSubmit} autoComplete="off" id="login-submit">
+    <Form onSubmit={handleSubmit} id="login-submit">
       <Grid container direction={"column"} spacing={3}>
         <Grid item>
           <Field
@@ -48,7 +48,7 @@ const LoginForm = (props) => {
             size={_SMALL}
             variant={_OUTLINE}
             label={PASSWORD}
-              value={values.password}
+            value={values.password}
             name={_PASSWORD}
             helperText={touched.password ? errors.password : ""}
             error={touched.password && Boolean(errors.password)}

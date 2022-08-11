@@ -8,17 +8,26 @@ import { Formik } from "formik";
 
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../../graphql/mutations";
-
+import { useState } from "react";
+import { _ERROR, _SUCCESS } from "../../../utils/Constants";
 const paperStyle = { padding: "30px 20px", width: 400, margin: "150px auto" };
 const headerStyle = { margin: 0 };
 const avatarStyle = { backgroundColor: "#1877f2" };
 
 const Login = () => {
   const [LoginUser, { data, loading, error }] = useMutation(LOGIN_USER);
+  const [response, setResponse] = useState();
+  const changeResponse = () => {
+    setTimeout(() => {
+      setResponse(null);
+      return;
+    }, 3000);
+  };
 
   if (data) {
-    console.log(data.user.token);
+    console.log(data.user.userId);
     localStorage.setItem("token", data.user.token);
+    localStorage.setItem("userId", data.user.userId);
     window.location.replace("/addCity");
   }
   const SubmitForm = (data, { resetForm }) => {
@@ -27,7 +36,14 @@ const Login = () => {
       variables: {
         newSignInUser: data,
       },
-    });
+    })
+      .then((data) => {
+        setResponse(LOGIN_SUCCESSFUL);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        setResponse(error.message);
+      });
     resetForm({});
   };
 
@@ -59,28 +75,16 @@ const Login = () => {
           </div>
           <div>
             <Paper>
-              {data && (
+              {changeResponse()}
+              {response && (
                 <Alert
                   elevation={1}
                   sx={{
                     mt: 2,
                   }}
-                  variant="outlined"
-                  severity="success"
+                  severity={response === LOGIN_SUCCESSFUL ? _SUCCESS : _ERROR}
                 >
-                  {LOGIN_SUCCESSFUL}
-                </Alert>
-              )}
-
-              {error && (
-                <Alert
-                  elevation={1}
-                  sx={{
-                    mt: 2,
-                  }}
-                  severity="error"
-                >
-                  {error.message}
+                  {response}
                 </Alert>
               )}
             </Paper>

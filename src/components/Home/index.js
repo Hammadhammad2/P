@@ -6,7 +6,6 @@ import { box1, box2 } from "../../styles.js";
 
 const Home = () => {
   const user = localStorage.getItem("token");
-  console.log(user);
 
   const handleLogout = () => {
     localStorage.clear();

@@ -18,6 +18,9 @@ import { box1, box2 } from "../../styles.js";
 
 const City = () => {
   const user = localStorage.getItem("token");
+  const id = localStorage.getItem("userId");
+
+  const [resposne, setResponse] = useState();
 
   const [displayLocations, setDisplayLocations] = useState([]);
   const [location, setLocation] = useState([]);
@@ -38,12 +41,10 @@ const City = () => {
 
   const changeResponse = () => {
     setTimeout(() => {
-      error = null;
-
+      setResponse(null);
       return;
     }, 3000);
   };
-
   useEffect(() => {
     getCitiesRequest(delayValue, inputValue)
       .then((search) => {
@@ -76,8 +77,26 @@ const City = () => {
           <Autocomplete
             noOptionsText="No Cities Found"
             size="small"
-            clearOnBlur={false}
+            clearOnBlur={true}
             onChange={(event, newValue) => {
+              if (newValue) {
+                if (user) {
+                  newValue["userId"] = id;
+                }
+                console.log(newValue);
+                addCities({
+                  variables: {
+                    newCity: newValue,
+                  },
+                })
+                  .then((res) => {
+                    location.push(newValue);
+                  })
+                  .catch(({ err }) => {
+                    console.log({ err });
+                    setResponse({ error });
+                  });
+              }
               // setLocation(newValue);
 
               // if (newValue) {
@@ -85,16 +104,6 @@ const City = () => {
               //     console.log(user);
               //     newValue["userId"] = user._id;
               //   }
-
-              console.log(newValue);
-
-              addCities({
-                variables: {
-                  newCity: newValue,
-                },
-              }).then((res) => {
-                location.push(newValue);
-              });
             }}
             inputValue={inputValue}
             onInputChange={(event, newInputValue) => {
@@ -108,7 +117,7 @@ const City = () => {
               <TextField {...params} label="Search Location" />
             )}
           />
-          {error && (
+          {resposne && (
             <Box>
               {changeResponse()}
               <Alert
@@ -118,7 +127,7 @@ const City = () => {
                 }}
                 severity={_ERROR}
               >
-                {error.message}
+                CITY ALREADY EXISTS
               </Alert>
             </Box>
           )}

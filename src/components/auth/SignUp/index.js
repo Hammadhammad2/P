@@ -11,28 +11,41 @@ import { Link } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 
 import { SIGN_Up_USER } from "../../../graphql/mutations";
-import CircularProgress from '@mui/material/CircularProgress';
-
-
+import CircularProgress from "@mui/material/CircularProgress";
+import { Box } from "@mui/system";
 
 const paperStyle = { padding: "30px 20px", width: 400, margin: "150px auto" };
 const headerStyle = { margin: 0 };
 const avatarStyle = { backgroundColor: "#1877f2" };
 
 const SignUp = () => {
- var[signUpUser, { data, loading, error }] = useMutation(SIGN_Up_USER);
- const [displayAlert, setdisplayAlert] = useState(true);
-  if (loading) return  <CircularProgress />
+  const [response, setResponse] = useState();
+  var [signUpUser, { loading }] = useMutation(SIGN_Up_USER);
+
+  if (loading) return <CircularProgress />;
   const SubmitForm = (data, { resetForm }) => {
+    console.log(data);
     signUpUser({
       variables: {
         newUser: data,
       },
-    });
+    })
+      .then((data) => {
+        setResponse(SIGNUP_SUCCESSFUL);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        setResponse(error.message);
+      });
     resetForm({});
-  
   };
 
+  const changeResponse = () => {
+    setTimeout(() => {
+      setResponse(null);
+      return;
+    }, 3000);
+  };
   return (
     <Grid align="center">
       <Paper elevation={10} style={paperStyle}>
@@ -67,44 +80,22 @@ const SignUp = () => {
               </>
             );
           }}
-            
         </Formik>
-      
- 
-        <div>
-          <Paper> 
-         
-          {data  && (
-         
-              <Alert
-                elevation={1}
-                sx={{
-                  mt: 2,
-                }}
-                variant="outlined" severity="success"
-              >
-                {SIGNUP_SUCCESSFUL}
-            
-              </Alert>
-              
-            )}
-            
 
-            {error   && (
+        <div>
+          <Paper>
+            {changeResponse()}
+            {response && (
               <Alert
                 elevation={1}
                 sx={{
                   mt: 2,
                 }}
-                severity="error"
+                severity={response === SIGNUP_SUCCESSFUL ? _SUCCESS : _ERROR}
               >
-                {error.message}
-                
-              
+                {response}
               </Alert>
             )}
-            
-        
           </Paper>
         </div>
       </Paper>
