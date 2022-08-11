@@ -12,3 +12,12 @@ export const GET_ALL_USERS = gql`
     }
   }
 `;
+
+export const GET_ALL_CITIES = gql`
+  query getCities($userID: String) {
+    cities: getcities(userID: $userID) {
+      label
+      _id
+    }
+  }
+`;
