@@ -27,3 +27,12 @@ export const ADD_CITY = gql`
     }
   }
 `;
+
+export const DELETE_QUERY = gql`
+  mutation DeleteCities($userID: ID) {
+    cities: deleteCities(userID: $userID) {
+      label
+      _id
+    }
+  }
+`;

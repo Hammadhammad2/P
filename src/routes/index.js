@@ -5,6 +5,7 @@ import SignUp from "../pages/auth/SignUp";
 import Login from "../pages/auth/Login";
 import Home from "../pages/Home";
 import AddCity from "../pages/addCity";
+import ShowCity from "../pages/ShowCity";
 
 import { AuthenRoutes, ProtectedRoutes } from "./ProtectedRoutes";
 
@@ -39,6 +40,14 @@ const AuthRoutes = () => {
           element={
             <ProtectedRoutes loggedIn={user}>
               <AddCity />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/ShowCity"
+          element={
+            <ProtectedRoutes loggedIn={user}>
+              <ShowCity />
             </ProtectedRoutes>
           }
         />

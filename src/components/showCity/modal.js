@@ -17,21 +17,22 @@ import { _PRIMARY } from "../../utils/Constants";
 import IconButton from "@mui/material/IconButton";
 import RemoveCircleTwoToneIcon from "@mui/icons-material/RemoveCircleTwoTone";
 
-import { addCities } from "../../services/addCity";
-
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { ADD_CITY } from "../../graphql/mutations";
 
 const Modals = ({ setCity }) => {
-  const user = JSON.parse(localStorage.getItem("profile")).user;
+  const user = localStorage.getItem("userId");
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState(null);
   const navigate = useNavigate();
 
   const handleClose = () => setOpen(false);
+  var [addCities, { data, loading, error }] = useMutation(ADD_CITY);
 
   let [inputField, setInputFields] = useState([
     {
-      userId: user ? user._id : "",
+      userId: user ? user : "",
       label: "",
       placeId: "",
       lon: "",
@@ -48,10 +49,13 @@ const Modals = ({ setCity }) => {
 
   const handleSubmit = () => {
     if (inputField) {
-      addCities(inputField)
+      addCities({
+        variables: {
+          newCity: inputField,
+        },
+      })
         .then((res) => {
           console.log(res);
-
           navigate("/ShowCity");
           console.log(response);
         })
@@ -64,7 +68,7 @@ const Modals = ({ setCity }) => {
     console.log(inputField);
     setInputFields([
       {
-        userId: user ? user._id : "",
+        userId: user ? user : "",
         label: "",
         placeId: "",
         lon: "",
@@ -83,7 +87,7 @@ const Modals = ({ setCity }) => {
     setInputFields([
       ...inputField,
       {
-        userId: user ? user._id : "",
+        userId: user ? user : "",
         label: "",
         placeId: "",
         lon: "",

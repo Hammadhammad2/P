@@ -1,35 +1,58 @@
 import React, { useState, useEffect } from "react";
 import { Box } from "@mui/system";
-import { Button, Paper, Stack, Typography } from "@mui/material";
-import bgimage from "../../assets/img/image.jpg";
+import { Button, Paper, Stack } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Logout from "../Logout";
+
 import { Link, useLocation } from "react-router-dom";
 import { box1, box2 } from "../../styles.js";
-import { getCities, deleteCities } from "../../services/seeCitites";
+
 import Modals from "./modal";
+import { useMutation, useQuery } from "@apollo/client";
+import { GET_ALL_CITIES } from "../../graphql/queries";
+import { DELETE_QUERY } from "../../graphql/mutations.js";
 
 const ShowCity = () => {
-  const [cities, setCities] = useState([]);
-  const user = JSON.parse(localStorage.getItem("profile")).user;
-
-  const location = useLocation();
+  const user = localStorage.getItem("userId");
+  const navigate = useNavigate();
+  console.log(user);
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.replace("/login");
+  };
 
   useEffect(() => {
-    getCities(user)
-      .then((res) => {
-        const cities = res.reverse();
-        setCities(cities);
-      })
-      .catch((res) => {
-        console.log(res);
-      });
-  }, [location]);
+    navigate("/ShowCity");
+  }, []);
+
+  const { data, loading, error } = useQuery(GET_ALL_CITIES, {
+    variables: {
+      userID: user,
+    },
+    refetchQueries: [GET_ALL_CITIES, "getcities"],
+  });
+
+  const [
+    deleteCities,
+    { data: deleteData, loading: deleteLoading, error: deleteError },
+  ] = useMutation(DELETE_QUERY);
+
+  if (loading) return <h1>loading</h1>;
+
+  if (data) {
+    data.cities.map((res) => {
+      return console.log(res.label);
+    });
+  }
+
+  if (error) {
+    console.log({ error });
+  }
 
   return (
     <>
@@ -46,7 +69,7 @@ const ShowCity = () => {
                 overflow: "hidden",
               }}
             >
-              {cities.length > 0 ? (
+              {data.cities.length > 0 ? (
                 <TableContainer component={Paper} elevation={6}>
                   <Table
                     sx={{ minWidth: 500, fontSize: "10px" }}
@@ -63,7 +86,7 @@ const ShowCity = () => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {cities.map((city, index) => (
+                      {data.cities.map((city, index) => (
                         <TableRow
                           key={index}
                           sx={{
@@ -79,12 +102,16 @@ const ShowCity = () => {
                                 color="primary"
                                 fullWidth
                                 onClick={() => {
-                                  deleteCities(city._id)
+                                  deleteCities({
+                                    variables: {
+                                      newCity: city._id,
+                                    },
+                                  })
                                     .then((res) => {
                                       console.log(res);
                                       console.log(city._id);
-                                      setCities(
-                                        cities.filter((c) => c._id !== city._id)
+                                      data.cities.filter(
+                                        (c) => c._id !== city._id
                                       );
                                     })
                                     .catch((res) => {
@@ -131,8 +158,22 @@ const ShowCity = () => {
               >
                 Show Weather
               </Button>
+              {user && (
+                <Button
+                  onClick={handleLogout}
+                  variant="contained"
+                  sx={{
+                    width: "200px",
+                    margin: "50px 0px",
+                    color: "white",
+                    border: "2px white solid",
+                    ml: 5,
+                  }}
+                >
+                  Logout
+                </Button>
+              )}
             </Box>
-            {user && <Logout />}
           </Stack>
         </Box>
       </Box>
