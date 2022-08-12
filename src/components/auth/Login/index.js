@@ -32,6 +32,7 @@ const Login = () => {
   }
   const SubmitForm = (data, { resetForm }) => {
     console.log(data);
+
     LoginUser({
       variables: {
         newSignInUser: data,

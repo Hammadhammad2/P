@@ -20,35 +20,32 @@ import { DELETE_QUERY } from "../../graphql/mutations.js";
 const ShowCity = () => {
   const user = localStorage.getItem("userId");
   const navigate = useNavigate();
-  console.log(user);
+
   const handleLogout = () => {
     localStorage.clear();
     window.location.replace("/login");
   };
 
-  useEffect(() => {
-    navigate("/ShowCity");
-  }, []);
-
-  const { data, loading, error } = useQuery(GET_ALL_CITIES, {
+  const { data, loading, error, refetch } = useQuery(GET_ALL_CITIES, {
     variables: {
       userID: user,
     },
-    refetchQueries: [GET_ALL_CITIES, "getcities"],
   });
+  useEffect(() => {}, [data]);
 
   const [
     deleteCities,
     { data: deleteData, loading: deleteLoading, error: deleteError },
   ] = useMutation(DELETE_QUERY);
 
-  if (loading) return <h1>loading</h1>;
-
-  if (data) {
-    data.cities.map((res) => {
-      return console.log(res.label);
-    });
+  if (deleteData) {
+    console.log(deleteData);
   }
+  if (deleteError) {
+    console.log({ deleteError });
+  }
+
+  if (loading) return <h1>loading</h1>;
 
   if (error) {
     console.log({ error });
@@ -104,18 +101,19 @@ const ShowCity = () => {
                                 onClick={() => {
                                   deleteCities({
                                     variables: {
-                                      newCity: city._id,
+                                      cityId: city._id,
                                     },
                                   })
-                                    .then((res) => {
-                                      console.log(res);
+                                    .then((deleteData) => {
+                                      console.log(deleteData);
                                       console.log(city._id);
                                       data.cities.filter(
                                         (c) => c._id !== city._id
                                       );
+                                      refetch();
                                     })
-                                    .catch((res) => {
-                                      console.log(res);
+                                    .catch(({ deleteError }) => {
+                                      console.log({ deleteError });
                                     });
                                 }}
                               >

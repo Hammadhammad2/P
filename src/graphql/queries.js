@@ -18,6 +18,8 @@ export const GET_ALL_CITIES = gql`
     cities: getcities(userID: $userID) {
       label
       _id
+      lat
+      lon
     }
   }
 `;

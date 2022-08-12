@@ -7,5 +7,6 @@ export const Modalstyle = {
   bgcolor: "#fff",
   border: "2px solid #000",
   boxShadow: 24,
+  borderRadius: "25px",
   p: 4,
 };

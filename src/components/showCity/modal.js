@@ -29,6 +29,9 @@ const Modals = ({ setCity }) => {
 
   const handleClose = () => setOpen(false);
   var [addCities, { data, loading, error }] = useMutation(ADD_CITY);
+  if (error) {
+    console.log({ error });
+  }
 
   let [inputField, setInputFields] = useState([
     {
@@ -49,23 +52,24 @@ const Modals = ({ setCity }) => {
 
   const handleSubmit = () => {
     if (inputField) {
-      addCities({
-        variables: {
-          newCity: inputField,
-        },
-      })
-        .then((res) => {
-          console.log(res);
-          navigate("/ShowCity");
-          console.log(response);
+      inputField.map((name, index) => {
+        console.log(name, index);
+        addCities({
+          variables: {
+            newCity: name,
+          },
         })
-        .catch((err) => {
-          setResponse(err);
-          console.log(err);
-        });
+          .then((res) => {
+            console.log(res);
+            navigate("/ShowCity");
+            console.log(res);
+          })
+          .catch(({ error }) => {
+            console.log({ error });
+            setResponse(error.messsage);
+          });
+      });
     }
-
-    console.log(inputField);
     setInputFields([
       {
         userId: user ? user : "",
@@ -182,7 +186,7 @@ const Modals = ({ setCity }) => {
               ))}
             </FormControl>
           </div>
-          {/* <div>
+          <div>
             {response && (
               <Alert
                 elevation={1}
@@ -194,7 +198,7 @@ const Modals = ({ setCity }) => {
                 {response}
               </Alert>
             )}
-          </div> */}
+          </div>
 
           <Button
             onClick={handleSubmit}
@@ -205,7 +209,7 @@ const Modals = ({ setCity }) => {
           </Button>
           <Button
             onClick={handleClose}
-            sx={{ width: "150px", mt: "20px" }}
+            sx={{ width: "150px", mt: "20px", ml: 1 }}
             variant="contained"
           >
             Close

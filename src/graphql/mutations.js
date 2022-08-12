@@ -29,10 +29,9 @@ export const ADD_CITY = gql`
 `;
 
 export const DELETE_QUERY = gql`
-  mutation DeleteCities($userID: ID) {
-    cities: deleteCities(userID: $userID) {
+  mutation DeleteCities($cityId: String) {
+    cities: deleteCities(cityId: $cityId) {
       label
-      _id
     }
   }
 `;
