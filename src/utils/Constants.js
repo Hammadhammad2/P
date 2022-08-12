@@ -13,3 +13,7 @@ export const _NAME = "name";
 export const _CONFIRMPASSWORD = "confirmpassword";
 export const _PHONENO = "phoneno";
 export const API_KEY = "80a37e80faf0e3803564f2df1ffcbb56";
+export const _LABEL = "label";
+export const _PLACEID = "placeid";
+export const _LAT = "lat";
+export const _LON = "lon";

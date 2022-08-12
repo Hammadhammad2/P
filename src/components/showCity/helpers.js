@@ -1,12 +1,12 @@
 import * as Yup from "yup";
-export const SignUpInitialValues = {
+export const modalInitialValues = {
   label: "",
   placeId: "",
   lat: "",
   lon: "",
 };
 
-export const SignUpSchema = Yup.object().shape({
+export const modalSchema = Yup.object().shape({
   label: Yup.string().required("Please Enter City Name"),
   lat: Yup.number("Please Enter LATITUDE")
     .required("Please Enter LATITUDE ")

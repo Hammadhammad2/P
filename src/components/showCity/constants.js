@@ -10,3 +10,11 @@ export const Modalstyle = {
   borderRadius: "25px",
   p: 4,
 };
+export const PLACEID = "PlaceId*";
+export const LABEL = "Label*";
+export const LAT = "Latitude*";
+export const LON = "Longitude*";
+export const ENTER_PLACEID = "Enter Place ID";
+export const ENTER_LABEL = "Enter label";
+export const ENTER_LAT = "Enter Latitude";
+export const ENTER_LON = "Enter Longitude";

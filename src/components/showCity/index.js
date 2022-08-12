@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Box } from "@mui/system";
 import { Button, Paper, Stack } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,7 +9,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { box1, box2 } from "../../styles.js";
 
 import Modals from "./modal";
@@ -19,7 +19,6 @@ import { DELETE_QUERY } from "../../graphql/mutations.js";
 
 const ShowCity = () => {
   const user = localStorage.getItem("userId");
-  const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.clear();
@@ -33,10 +32,8 @@ const ShowCity = () => {
   });
   useEffect(() => {}, [data]);
 
-  const [
-    deleteCities,
-    { data: deleteData, loading: deleteLoading, error: deleteError },
-  ] = useMutation(DELETE_QUERY);
+  const [deleteCities, { data: deleteData, error: deleteError }] =
+    useMutation(DELETE_QUERY);
 
   if (deleteData) {
     console.log(deleteData);
