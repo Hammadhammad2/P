@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { _SUCCESS, _ERROR } from "../../utils/Constants";
 import * as Yup from "yup";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { CitySchema} from "./helpers";
 
 import {
   Button,
@@ -18,29 +19,32 @@ import {
 import { Formik, Form, Field, FieldArray, getIn } from "formik";
 
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { ADD_CITY } from "../../graphql/mutations";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 
 import DialogTitle from "@mui/material/DialogTitle";
+import { GET_ALL_CITIES } from "../../graphql/queries";
 
 const Modals = ({ setCity }) => {
-  const user = localStorage.getItem("userId");
-  // const [open, setOpen] = useState(false);
-  const [response, setResponse] = useState(null);
-  const navigate = useNavigate();
+
+  const user = localStorage.getItem("token");
   const id = localStorage.getItem("userId");
-  // const handleClose = () => setOpen(false);
-  var [addCities, { data, loading, error }] = useMutation(ADD_CITY);
+  const [response, setResponse] = useState(null);
+ 
+   var [addCities, { data, loading, error }] = useMutation(ADD_CITY);
   const [open, setOpen] = useState(false);
   if (loading) return <h1>loading</h1>;
   if (error) {
     console.log({ error });
   }
+
   if (data) {
     console.log(data);
   }
+  
+  
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -50,16 +54,7 @@ const Modals = ({ setCity }) => {
     setOpen(false);
   };
 
-  const CitySchema = Yup.object().shape({
-    cities: Yup.array().of(
-      Yup.object().shape({
-        placeId: Yup.string().required("Required"),
-        label: Yup.string().required("Required"),
-        lat: Yup.string().required("Required"),
-        lon: Yup.string().required("Required"),
-      })
-    ),
-  });
+  
 
   return (
     <div>
@@ -71,29 +66,29 @@ const Modals = ({ setCity }) => {
         <Box sx={{ padding: "20px" }}>
           <Formik
             initialValues={{
-              cities: [{ placeId: "", label: "", lat: "", lon: "" }],
+              cities: [{ placeId: "", label: "", lat:"", lon:"",userId:id }],
             }}
             validationSchema={CitySchema}
             onSubmit={(values, { setSubmitting }) => {
               console.log(id);
-              console.log(values.cities);
-
-              // values.cities.map((city, index) =>
-              //   addCities({
-              //     variables: {
-              //       newCity: city,
-              //     },
-              //   })
-              //     .then((res) => {
-              //       console.log(res);
-              //       navigate("/ShowCity");
-              //       console.log(res);
-              //     })
-              //     .catch(({ error }) => {
-              //       console.log({ error });
-              //       setResponse(error.messsage);
-              //     })
-              // );
+             values.cities.map((city, index) =>  
+              {    
+                fof(int i=0;i<)   
+                  addCities({
+                  variables: {
+                    newCity: city,
+                  },
+                })
+                  .then((res) => {
+                    console.log(res);
+                  })
+                  .catch(( error) => {
+                    console.log({ error });
+                    setResponse(error.messsage);
+                  })
+                
+              }
+              )
 
               setSubmitting(true)
               
@@ -188,7 +183,7 @@ const Modals = ({ setCity }) => {
                                     )
                                   }
                                 />
-                                <Field
+                               <Field
                                   name={`cities.${index}.lon`}
                                   onChange={handleChange}
                                   as={TextField}
@@ -207,7 +202,7 @@ const Modals = ({ setCity }) => {
                                     )
                                   }
                                 />
-                                {/* {index > 0 && ( */}
+                              
                                 <div>
                                   <Button
                                     sx={{ height: "40px" }}
@@ -215,7 +210,7 @@ const Modals = ({ setCity }) => {
                                     variant={
                                       index > 0 ? "outlined" : "contained"
                                     }
-                                    onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                                    onClick={() => arrayHelpers.remove(index)} 
                                   >
                                     <RemoveIcon />
                                   </Button>
@@ -233,7 +228,7 @@ const Modals = ({ setCity }) => {
                                         lat: "",
                                         lon: "",
                                       })
-                                    } // insert an empty string at a position
+                                    } 
                                   >
                                     <AddIcon />
                                   </Button>
@@ -246,8 +241,7 @@ const Modals = ({ setCity }) => {
                             variant="contained"
                             onClick={() => arrayHelpers.push("")}
                           >
-                            {/* show this when user has removed all friends from the list */}
-                            Add a city
+                           
                           </Button>
                         )}
                       </div>
@@ -268,9 +262,7 @@ const Modals = ({ setCity }) => {
                     >
                       {isSubmitting ? "Adding..." : " Add Cities"}
                     </LoadingButton>
-                    {/* <Button variant="contained" type="submit">
-                      Add Cities
-                    </Button> */}
+                   
                   </DialogActions>
                 </Form>
               </div>
