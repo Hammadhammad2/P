@@ -30,7 +30,9 @@ const ShowCity = () => {
       userID: user,
     },
   });
-  useEffect(() => {}, [data]);
+  useEffect(() => {
+    refetch();
+  }, [data]);
 
   const [deleteCities, { data: deleteData, error: deleteError }] =
     useMutation(DELETE_QUERY);
@@ -64,7 +66,7 @@ const ShowCity = () => {
               }}
             >
               {data.cities.length > 0 ? (
-                <TableContainer component={Paper} elevation={6}>
+                <TableContainer component={Paper} elevation={0}>
                   <Table
                     sx={{ minWidth: 500, fontSize: "10px" }}
                     aria-label="simple table"
@@ -106,6 +108,7 @@ const ShowCity = () => {
                                       console.log(city._id);
                                       data.cities.filter(
                                         (c) => c._id !== city._id
+                                        
                                       );
                                       refetch();
                                     })

@@ -6,13 +6,16 @@ export const modalInitialValues = {
   lon: "",
 };
 
-export const modalSchema = Yup.object().shape({
-  label: Yup.string().required("Please Enter City Name"),
-  lat: Yup.number("Please Enter LATITUDE")
-    .required("Please Enter LATITUDE ")
-    .positive("Please enter Positive digits only"),
-  lon: Yup.number("Please Enter LATITUDE")
-    .required("Please Enter LATITUDE ")
-    .positive("Please enter Positive digits only"),
-  placeId: Yup.string().required("Please Enter PLACEID"),
+
+export const CitySchema = Yup.object().shape({
+  cities: Yup.array().of(
+    Yup.object().shape({
+  label: Yup.string().required("Required"),
+  lat:  Yup.string().required("Required"),
+  lon:  Yup.string().required("Required"),  
+  placeId: Yup.string().required("Required"),
+    })
+  ),
 });
+
+

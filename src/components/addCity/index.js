@@ -53,8 +53,8 @@ const City = () => {
           newData.push({
             placeId: search[i].id,
             label: search[i].place_name,
-            lon: search[i].geometry.coordinates[0],
-            lat: search[i].geometry.coordinates[1],
+            lon: search[i].geometry.coordinates[0].toString(),
+            lat: search[i].geometry.coordinates[1].toString(),
           });
         }
         setDisplayLocations(newData);
@@ -77,7 +77,7 @@ const City = () => {
           <Autocomplete
             noOptionsText="No Cities Found"
             size="small"
-            clearOnBlur={true}
+            clearOnBlur={false}
             onChange={(event, newValue) => {
               if (newValue) {
                 if (user) {
@@ -92,18 +92,12 @@ const City = () => {
                   .then((res) => {
                     location.push(newValue);
                   })
-                  .catch(({ err }) => {
-                    console.log({ err });
+                  .catch(( error ) => {
+                    console.log({ error });
                     setResponse({ error });
                   });
               }
-              // setLocation(newValue);
-
-              // if (newValue) {
-              //   if (user) {
-              //     console.log(user);
-              //     newValue["userId"] = user._id;
-              //   }
+             
             }}
             inputValue={inputValue}
             onInputChange={(event, newInputValue) => {
