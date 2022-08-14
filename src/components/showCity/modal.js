@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import { _SUCCESS, _ERROR } from "../../utils/Constants";
+import * as Yup from "yup";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
+import SaveIcon from "@mui/icons-material/Save";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 import {
   Button,
@@ -45,79 +50,17 @@ const Modals = ({ setCity }) => {
     setOpen(false);
   };
 
-  // let [inputField, setInputFields] = useState([
-  //   {
-  //     userId: user ? user : "",
-  //     label: "",
-  //     placeId: "",
-  //     lon: "",
-  //     lat: "",
-  //   },
-  // ]);
+  const CitySchema = Yup.object().shape({
+    cities: Yup.array().of(
+      Yup.object().shape({
+        placeId: Yup.string().required("Required"),
+        label: Yup.string().required("Required"),
+        lat: Yup.string().required("Required"),
+        lon: Yup.string().required("Required"),
+      })
+    ),
+  });
 
-  // const handleInputChange = (event, index) => {
-  //   const { name, value } = event.target;
-  //   const list = [...inputField];
-  //   list[index][name] = value;
-  //   setInputFields(list);
-  // };
-
-  // const handleSubmit = () => {
-  //   if (inputField) {
-  //     inputField.map((name, index) => {
-  //       console.log(name, index);
-  //       addCities({
-  //         variables: {
-  //           newCity: name,
-  //         },
-  //       })
-  //         .then((res) => {
-  //           console.log(res);
-  //           navigate("/ShowCity");
-  //           console.log(res);
-  //         })
-  //         .catch(({ error }) => {
-  //           console.log({ error });
-  //           setResponse(error.messsage);
-  //         });
-  //     });
-  //   }
-  //   setInputFields([
-  //     {
-  //       userId: user ? user : "",
-  //       label: "",
-  //       placeId: "",
-  //       lon: "",
-  //       lat: "",
-  //     },
-  //   ]);
-  // };
-
-  // const handleOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleAddFields = () => {
-  //   console.log("data");
-
-  //   setInputFields([
-  //     ...inputField,
-  //     {
-  //       userId: user ? user : "",
-  //       label: "",
-  //       placeId: "",
-  //       lon: "",
-  //       lat: "",
-  //     },
-  //   ]);
-  // };
-
-  // const handleRemoveFields = (index) => {
-  //   const values = [...inputField];
-
-  //   values.splice(index, 1);
-  //   setInputFields(values);
-  // };
   return (
     <div>
       <Button variant="contained" fullWidth onClick={handleClickOpen}>
@@ -128,33 +71,45 @@ const Modals = ({ setCity }) => {
         <Box sx={{ padding: "20px" }}>
           <Formik
             initialValues={{
-              cities: [{ placeId: "", label: "", lat: 0, lon: 0, userId: id }],
+              cities: [{ placeId: "", label: "", lat: "", lon: "" }],
             }}
-            onSubmit={(values) => {
-              values.cities.map((name, index) => {
-                console.log(values.cities);
+            validationSchema={CitySchema}
+            onSubmit={(values, { setSubmitting }) => {
+              console.log(id);
+              console.log(values.cities);
 
-                addCities({
-                  variables: {
-                    newCity: name,
-                  },
-                })
-                  .then((res) => {
-                    console.log(res);
-                    navigate("/ShowCity");
-                    console.log(res);
-                  })
-                  .catch(({ error }) => {
-                    console.log({ error });
-                    setResponse(error.messsage);
-                  });
-                handleClose();
-              });
+              // values.cities.map((city, index) =>
+              //   addCities({
+              //     variables: {
+              //       newCity: city,
+              //     },
+              //   })
+              //     .then((res) => {
+              //       console.log(res);
+              //       navigate("/ShowCity");
+              //       console.log(res);
+              //     })
+              //     .catch(({ error }) => {
+              //       console.log({ error });
+              //       setResponse(error.messsage);
+              //     })
+              // );
+
+              setSubmitting(true)
+              
             }}
-            render={({ errors, touched, values, handleChange, handleBlur }) => (
+          >
+            {({
+              errors,
+              touched,
+              values,
+              isSubmitting,
+              handleChange,
+              handleBlur,
+            }) => (
               <div>
                 <Form>
-                  <DialogTitle sx={{ padding: "10px 0px" }}>
+                  <DialogTitle sx={{ padding: "0px 0px 10px 0px" }}>
                     {"Enter Details"}
                   </DialogTitle>
                   <FieldArray
@@ -178,13 +133,21 @@ const Modals = ({ setCity }) => {
                                   onChange={handleChange}
                                   onBlur={handleBlur}
                                   helperText={
-                                    getIn(touched, `cities.${index}.placeId`)
-                                      ? getIn(errors, `cities.${index}.placeId`)
+                                    getIn(touched, `cities[${index}].placeId`)
+                                      ? getIn(
+                                          errors,
+                                          `cities[${index}].placeId`
+                                        )
                                       : ""
                                   }
                                   error={
-                                    getIn(touched, "placeId") &&
-                                    Boolean(getIn(errors, "placeId"))
+                                    getIn(
+                                      touched,
+                                      `cities[${index}].placeId`
+                                    ) &&
+                                    Boolean(
+                                      getIn(errors, `cities[${index}].placeId`)
+                                    )
                                   }
                                 />
                                 <Field
@@ -194,6 +157,17 @@ const Modals = ({ setCity }) => {
                                   label="City Name"
                                   onChange={handleChange}
                                   onBlur={handleBlur}
+                                  helperText={
+                                    getIn(touched, `cities[${index}].label`)
+                                      ? getIn(errors, `cities[${index}].label`)
+                                      : ""
+                                  }
+                                  error={
+                                    getIn(touched, `cities[${index}].label`) &&
+                                    Boolean(
+                                      getIn(errors, `cities[${index}].label`)
+                                    )
+                                  }
                                 />
                                 <Field
                                   name={`cities.${index}.lat`}
@@ -202,6 +176,17 @@ const Modals = ({ setCity }) => {
                                   size="small"
                                   label="Latitude"
                                   onBlur={handleBlur}
+                                  helperText={
+                                    getIn(touched, `cities[${index}].lat`)
+                                      ? getIn(errors, `cities[${index}].lat`)
+                                      : ""
+                                  }
+                                  error={
+                                    getIn(touched, `cities[${index}].lat`) &&
+                                    Boolean(
+                                      getIn(errors, `cities[${index}].lat`)
+                                    )
+                                  }
                                 />
                                 <Field
                                   name={`cities.${index}.lon`}
@@ -210,34 +195,47 @@ const Modals = ({ setCity }) => {
                                   size="small"
                                   label="Longitude"
                                   onBlur={handleBlur}
+                                  helperText={
+                                    getIn(touched, `cities[${index}].lon`)
+                                      ? getIn(errors, `cities[${index}].lon`)
+                                      : ""
+                                  }
+                                  error={
+                                    getIn(touched, `cities[${index}].lon`) &&
+                                    Boolean(
+                                      getIn(errors, `cities[${index}].lon`)
+                                    )
+                                  }
                                 />
-                                {index > 0 && (
-                                  <div>
-                                    <Button
-                                      sx={{ fontSize: "22px", padding: "1px" }}
-                                      variant="contained"
-                                      onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
-                                    >
-                                      -
-                                    </Button>
-                                  </div>
-                                )}
+                                {/* {index > 0 && ( */}
+                                <div>
+                                  <Button
+                                    sx={{ height: "40px" }}
+                                    disabled={index > 0 ? false : true}
+                                    variant={
+                                      index > 0 ? "outlined" : "contained"
+                                    }
+                                    onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                                  >
+                                    <RemoveIcon />
+                                  </Button>
+                                </div>
+                                {/* )} */}
 
                                 <div>
                                   <Button
-                                    sx={{ fontSize: "22px", padding: "1px" }}
-                                    size="small"
+                                    sx={{ height: "40px" }}
                                     variant="contained"
                                     onClick={() =>
                                       arrayHelpers.insert(index, {
                                         placeId: "",
                                         label: "",
-                                        lat: 0,
-                                        lon: 0,
+                                        lat: "",
+                                        lon: "",
                                       })
                                     } // insert an empty string at a position
                                   >
-                                    +
+                                    <AddIcon />
                                   </Button>
                                 </div>
                               </Stack>
@@ -256,95 +254,30 @@ const Modals = ({ setCity }) => {
                     )}
                   />
                   <Divider sx={{ margin: "20px 0px" }} />
-                  <DialogActions>
-                    <Button onClick={handleClose}>Close</Button>
-                    <Button variant="contained" type="submit">
-                      Submit
+                  <DialogActions sx={{ padding: "0px" }}>
+                    <Button variant="outlined" onClick={handleClose}>
+                      Close
                     </Button>
+                    <LoadingButton
+                      disabled={isSubmitting}
+                      loading={isSubmitting}
+                      loadingPosition="start"
+                      startIcon={<SaveIcon />}
+                      variant="contained"
+                      type="submit"
+                    >
+                      {isSubmitting ? "Adding..." : " Add Cities"}
+                    </LoadingButton>
+                    {/* <Button variant="contained" type="submit">
+                      Add Cities
+                    </Button> */}
                   </DialogActions>
                 </Form>
               </div>
             )}
-          />
+          </Formik>
         </Box>
       </Dialog>
-
-      {/* <Modal open={open} onClose={handleClose}>
-        {/* <Box sx={Modalstyle}>
-          {inputField.map((inputField, index) => (
-            <div>
-              <Formik
-                initialValues={modalInitialValues}
-                onSubmit={handleSubmit}
-                onchange={handleInputChange(event, index)}
-                validationSchema={modalSchema}
-              >
-                {(props) => {
-                  return (
-                    <>
-                      <ModalForm {...props} />
-                    </>
-                  );
-                }}
-              </Formik>
-
-              <IconButton
-                onClick={() => {
-                  handleAddFields();
-                }}
-              >
-                <AddCircleTwoToneIcon
-                  sx={{ fontSize: 40, mt: "2px", ml: "20px" }}
-                  color={_PRIMARY}
-                />
-              </IconButton>
-              {index > 0 ? (
-                <IconButton
-                  onClick={() => {
-                    handleRemoveFields(index);
-                  }}
-                >
-                  <RemoveCircleTwoToneIcon
-                    sx={{ fontSize: 40, mt: "2px", ml: "-20px" }}
-                    color={_PRIMARY}
-                  />
-                </IconButton>
-              ) : (
-                <div></div>
-              )}
-            </div>
-          ))}
-          <div>
-            {response && (
-              <Alert
-                elevation={1}
-                sx={{
-                  mt: 2,
-                }}
-                severity={response === "All cities added" ? _SUCCESS : _ERROR}
-              >
-                {response}
-              </Alert>
-            )}
-          </div>
-
-          <Button
-            onClick={handleSubmit}
-            sx={{ width: "150px", mt: "20px" }}
-            variant="contained"
-          >
-            Save
-          </Button>
-          <Button
-            onClick={handleClose}
-            sx={{ width: "150px", mt: "20px", ml: 1 }}
-            variant="contained"
-          >
-            Close
-          </Button>
-        </Box> 
-        
-      </Modal> */}
     </div>
   );
 };
