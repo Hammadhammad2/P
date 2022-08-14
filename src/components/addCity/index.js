@@ -111,20 +111,7 @@ const City = () => {
               <TextField {...params} label="Search Location" />
             )}
           />
-          {resposne && (
-            <Box>
-              {changeResponse()}
-              <Alert
-                elevation={1}
-                sx={{
-                  mt: 2,
-                }}
-                severity={_ERROR}
-              >
-                CITY ALREADY EXISTS
-              </Alert>
-            </Box>
-          )}
+         
         </Paper>
         <Paper
           sx={{

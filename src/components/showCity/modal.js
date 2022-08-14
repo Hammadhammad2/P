@@ -33,8 +33,23 @@ const Modals = ({ setCity }) => {
   const id = localStorage.getItem("userId");
   const [response, setResponse] = useState(null);
  
+  const { data:d, loading:l, error:e, refetch } = useQuery(GET_ALL_CITIES, {
+    variables: {
+      userID: id,
+    },
+  });
+ 
+
    var [addCities, { data, loading, error }] = useMutation(ADD_CITY);
+
   const [open, setOpen] = useState(false);
+
+ 
+  if(d) 
+  {
+     console.log(d)
+  }
+  if(e) { console.log(e)}
   if (loading) return <h1>loading</h1>;
   if (error) {
     console.log({ error });
@@ -51,6 +66,7 @@ const Modals = ({ setCity }) => {
   };
 
   const handleClose = () => {
+    refetch();
     setOpen(false);
   };
 
@@ -58,8 +74,8 @@ const Modals = ({ setCity }) => {
 
   return (
     <div>
-      <Button variant="contained" fullWidth onClick={handleClickOpen}>
-        Add More Cities
+      <Button variant="contained" fullWidth onClick={handleClickOpen}>   
+           Add More Cities
       </Button>
 
       <Dialog fullWidth maxWidth="md" open={open} onClose={handleClose}>
@@ -70,17 +86,20 @@ const Modals = ({ setCity }) => {
             }}
             validationSchema={CitySchema}
             onSubmit={(values, { setSubmitting }) => {
+              setSubmitting(true);
               console.log(id);
              values.cities.map((city, index) =>  
               {    
-                fof(int i=0;i<)   
+               
                   addCities({
                   variables: {
                     newCity: city,
                   },
                 })
                   .then((res) => {
+                    refetch();
                     console.log(res);
+                   
                   })
                   .catch(( error) => {
                     console.log({ error });
@@ -90,7 +109,7 @@ const Modals = ({ setCity }) => {
               }
               )
 
-              setSubmitting(true)
+              setSubmitting(false);
               
             }}
           >
@@ -227,6 +246,7 @@ const Modals = ({ setCity }) => {
                                         label: "",
                                         lat: "",
                                         lon: "",
+                                        userId:id,
                                       })
                                     } 
                                   >
@@ -248,6 +268,20 @@ const Modals = ({ setCity }) => {
                     )}
                   />
                   <Divider sx={{ margin: "20px 0px" }} />
+                  {response && (
+            <Box>
+              {changeResponse()}
+              <Alert
+                elevation={1}
+                sx={{
+                  mt: 2,
+                }}
+                severity={_ERROR}
+              >
+                CITY ALREADY EXISTS
+              </Alert>
+            </Box>
+          )}
                   <DialogActions sx={{ padding: "0px" }}>
                     <Button variant="outlined" onClick={handleClose}>
                       Close

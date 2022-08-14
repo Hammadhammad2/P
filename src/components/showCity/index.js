@@ -52,9 +52,11 @@ const ShowCity = () => {
 
   return (
     <>
+      
       <Box sx={box1}>
+
         <Box sx={box2}>
-          <Modals />
+        <Modals />  
           <Paper elevation={20} sx={{ padding: "20px", mt: "30px" }}>
             <Box
               sx={{
