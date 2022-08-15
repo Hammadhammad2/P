@@ -62,7 +62,7 @@ const ShowCity = () => {
                       fontSize: "10px",
                       width: {
                         xs: 400,
-                        sm: 600,
+                        sm: 410,
                         md: 650,
                         lg: 880,
                         xl: 1090,
