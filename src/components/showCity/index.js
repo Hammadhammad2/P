@@ -96,6 +96,15 @@ const ShowCity = () => {
                                 variant="contained"
                                 color="primary"
                                 fullWidth
+                                sx={{
+                                  width: {
+                                    xs: 100,
+                                    sm: 100,
+                                    md: 150,
+                                    lg: 150,
+                                    xl: 150,
+                                  },
+                                }}
                                 onClick={() => {
                                   deleteCities({
                                     variables: {

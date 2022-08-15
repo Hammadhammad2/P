@@ -71,6 +71,11 @@ const SignUp = () => {
                   variant="contained"
                   color={_PRIMARY}
                   fullWidth
+                  sx={{
+                    "&:hover": {
+                      color: "#fff",
+                    },
+                  }}
                 >
                   lOGIN
                 </Button>

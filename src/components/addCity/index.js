@@ -35,12 +35,6 @@ const City = () => {
     window.location.replace("/login");
   };
 
-  const changeResponse = () => {
-    setTimeout(() => {
-      setResponse(null);
-      return;
-    }, 4000);
-  };
   useEffect(() => {
     getCitiesRequest(delayValue, inputValue)
       .then((search) => {
@@ -80,8 +74,9 @@ const City = () => {
           <Autocomplete
             noOptionsText="No Cities Found"
             size="small"
-            clearOnBlur={false}
+            clearOnBlur={true}
             onChange={(event, newValue) => {
+              setResponse(null);
               if (newValue) {
                 if (user) {
                   newValue["userId"] = id;
@@ -96,8 +91,8 @@ const City = () => {
                     location.push(newValue);
                   })
                   .catch((error) => {
+                    setResponse(error.message);
                     console.log({ error });
-                    setResponse({ error });
                   });
               }
             }}
@@ -114,7 +109,6 @@ const City = () => {
             )}
           />
 
-          {changeResponse()}
           {response && (
             <Alert
               elevation={1}

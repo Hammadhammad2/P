@@ -4,13 +4,21 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Button, LinearProgress, Paper, Typography } from "@mui/material";
+import {
+  Alert,
+  Button,
+  LinearProgress,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { getweather } from "../../services/seeWeather";
 import WeatherCard from "./weatherCard";
 import { box1, box2 } from "../../styles.js";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_CITIES } from "../../graphql/queries";
+import CircularProgress from "@mui/material/CircularProgress";
+import { _ERROR } from "../../utils/Constants";
 
 const SeeWeather = () => {
   useEffect(() => {
@@ -18,6 +26,7 @@ const SeeWeather = () => {
   });
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState(null);
+  const [response, setResponse] = useState();
 
   const user = localStorage.getItem("userId");
   const handleLogout = () => {
@@ -30,7 +39,7 @@ const SeeWeather = () => {
       userID: user,
     },
   });
-  if (loading) return <h1>Loading</h1>;
+  if (loading) return <CircularProgress />;
   if (data) {
     console.log(data);
   }
@@ -53,9 +62,11 @@ const SeeWeather = () => {
           type: data.weather[0].main,
           temp: (data.main.temp - 273.15).toString().split(".")[0],
         });
+        setResponse(null);
       })
       .catch((err) => {
         console.log(err);
+        setResponse("No Such City Exists");
       });
   };
 
@@ -112,6 +123,18 @@ const SeeWeather = () => {
               <Box sx={{ width: "100%" }}>
                 <LinearProgress />
               </Box>
+            )}
+
+            {response && (
+              <Alert
+                elevation={1}
+                sx={{
+                  mt: 2,
+                }}
+                severity={_ERROR}
+              >
+                {response}
+              </Alert>
             )}
           </Paper>
         </Box>
