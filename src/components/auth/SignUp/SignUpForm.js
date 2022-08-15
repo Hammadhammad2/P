@@ -1,5 +1,5 @@
 import React from "react";
-import CircularProgress from "@mui/material/CircularProgress";
+
 import { Form, Field } from "formik";
 import {
   _SMALL,
@@ -7,7 +7,6 @@ import {
   _PASSWORD,
   _EMAIL,
   _SUBMIT,
-  _SECONDARY,
   _PRIMARY,
   _CONTAINED,
   _NAME,
@@ -25,13 +24,11 @@ import {
   ENTER_PHONENO,
   CONFIRMPASSWORD,
   ENTER_CONFIRMPASSWORD,
-  SIGNUP,
 } from "./constants";
-import { Grid, TextField, Button, Divider, Link } from "@mui/material";
+import { Grid, TextField, Button, Divider } from "@mui/material";
 
 const SignUpForm = (props) => {
-  const { touched, errors, loading, values, handleSubmit, handleChange } =
-    props;
+  const { touched, errors, values, handleSubmit } = props;
   return (
     <Form onSubmit={handleSubmit} autoComplete="off">
       <Grid container direction={"column"} spacing={3}>

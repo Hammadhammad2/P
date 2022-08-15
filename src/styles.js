@@ -7,7 +7,6 @@ export const box1 = {
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
-  backgroundColor: "blue",
 };
 
 export const box2 = {

@@ -56,7 +56,10 @@ const Home = () => {
                   sx={{
                     backgroundColor: "white",
                     border: "2px white solid",
-                    hover: "golden",
+                    "&:hover": {
+                      color: "#fff",
+                      border: "2px white solid",
+                    },
                     marginLeft: "30px",
                     width: "180px",
                   }}
@@ -71,7 +74,10 @@ const Home = () => {
                 <Button
                   sx={{
                     backgroundColor: "white",
-
+                    "&:hover": {
+                      color: "#fff",
+                      border: "2px white solid",
+                    },
                     width: "180px",
                   }}
                   component={Link}

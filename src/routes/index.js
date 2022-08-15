@@ -9,7 +9,7 @@ import ShowCity from "../pages/ShowCity";
 import SeeWeather from "../pages/seeweather";
 
 import { AuthenRoutes, ProtectedRoutes } from "./ProtectedRoutes";
-
+import Header from "../components/Header/Header.js";
 const AuthRoutes = () => {
   const [user, setUser] = useState(localStorage.getItem("token"));
   useEffect(() => {
@@ -17,6 +17,7 @@ const AuthRoutes = () => {
   }, []);
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
 
