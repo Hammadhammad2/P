@@ -1,24 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { _SUCCESS, _ERROR } from "../../utils/Constants";
-import * as Yup from "yup";
+import React, { useState } from "react";
+import { _ERROR } from "../../utils/Constants";
+
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { CitySchema} from "./helpers";
-
-import {
-  Button,
-  Box,
-  TextField,
-  Stack,
-  Paper,
-  Alert,
-  Divider,
-} from "@mui/material";
+import { CitySchema } from "./helpers";
+import CircularProgress from "@mui/material/CircularProgress";
+import { Button, Box, TextField, Stack, Alert, Divider } from "@mui/material";
 import { Formik, Form, Field, FieldArray, getIn } from "formik";
 
-import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_CITY } from "../../graphql/mutations";
 import Dialog from "@mui/material/Dialog";
@@ -27,30 +18,30 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import { GET_ALL_CITIES } from "../../graphql/queries";
 
-const Modals = ({ setCity }) => {
-
-  const user = localStorage.getItem("token");
+const Modals = () => {
   const id = localStorage.getItem("userId");
   const [response, setResponse] = useState(null);
- 
-  const { data:d, loading:l, error:e, refetch } = useQuery(GET_ALL_CITIES, {
+
+  const { error: e, refetch } = useQuery(GET_ALL_CITIES, {
     variables: {
       userID: id,
     },
   });
- 
 
-   var [addCities, { data, loading, error }] = useMutation(ADD_CITY);
+  var [addCities, { data, loading, error }] = useMutation(ADD_CITY);
 
   const [open, setOpen] = useState(false);
+  const changeResponse = () => {
+    setTimeout(() => {
+      setResponse(null);
+      return;
+    }, 3000);
+  };
 
- 
-  if(d) 
-  {
-     console.log(d)
+  if (e) {
+    console.log(e);
   }
-  if(e) { console.log(e)}
-  if (loading) return <h1>loading</h1>;
+  if (loading) return <CircularProgress />;
   if (error) {
     console.log({ error });
   }
@@ -58,8 +49,6 @@ const Modals = ({ setCity }) => {
   if (data) {
     console.log(data);
   }
-  
-  
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -70,28 +59,26 @@ const Modals = ({ setCity }) => {
     setOpen(false);
   };
 
-  
-
   return (
     <div>
-      <Button variant="contained" fullWidth onClick={handleClickOpen}>   
-           Add More Cities
+      <Button variant="contained" fullWidth onClick={handleClickOpen}>
+        Add More Cities
       </Button>
 
       <Dialog fullWidth maxWidth="md" open={open} onClose={handleClose}>
         <Box sx={{ padding: "20px" }}>
           <Formik
             initialValues={{
-              cities: [{ placeId: "", label: "", lat:"", lon:"",userId:id }],
+              cities: [
+                { placeId: "", label: "", lat: "", lon: "", userId: id },
+              ],
             }}
             validationSchema={CitySchema}
             onSubmit={(values, { setSubmitting }) => {
               setSubmitting(true);
               console.log(id);
-             values.cities.map((city, index) =>  
-              {    
-               
-                  addCities({
+              values.cities.map((city, index) => {
+                addCities({
                   variables: {
                     newCity: city,
                   },
@@ -99,18 +86,15 @@ const Modals = ({ setCity }) => {
                   .then((res) => {
                     refetch();
                     console.log(res);
-                   
                   })
-                  .catch(( error) => {
+                  .catch((error) => {
                     console.log({ error });
                     setResponse(error.messsage);
-                  })
-                
-              }
-              )
+                  });
+                return index;
+              });
 
               setSubmitting(false);
-              
             }}
           >
             {({
@@ -202,7 +186,7 @@ const Modals = ({ setCity }) => {
                                     )
                                   }
                                 />
-                               <Field
+                                <Field
                                   name={`cities.${index}.lon`}
                                   onChange={handleChange}
                                   as={TextField}
@@ -221,7 +205,7 @@ const Modals = ({ setCity }) => {
                                     )
                                   }
                                 />
-                              
+
                                 <div>
                                   <Button
                                     sx={{ height: "40px" }}
@@ -229,7 +213,7 @@ const Modals = ({ setCity }) => {
                                     variant={
                                       index > 0 ? "outlined" : "contained"
                                     }
-                                    onClick={() => arrayHelpers.remove(index)} 
+                                    onClick={() => arrayHelpers.remove(index)}
                                   >
                                     <RemoveIcon />
                                   </Button>
@@ -246,9 +230,9 @@ const Modals = ({ setCity }) => {
                                         label: "",
                                         lat: "",
                                         lon: "",
-                                        userId:id,
+                                        userId: id,
                                       })
-                                    } 
+                                    }
                                   >
                                     <AddIcon />
                                   </Button>
@@ -260,28 +244,26 @@ const Modals = ({ setCity }) => {
                           <Button
                             variant="contained"
                             onClick={() => arrayHelpers.push("")}
-                          >
-                           
-                          </Button>
+                          ></Button>
                         )}
                       </div>
                     )}
                   />
                   <Divider sx={{ margin: "20px 0px" }} />
                   {response && (
-            <Box>
-              {changeResponse()}
-              <Alert
-                elevation={1}
-                sx={{
-                  mt: 2,
-                }}
-                severity={_ERROR}
-              >
-                CITY ALREADY EXISTS
-              </Alert>
-            </Box>
-          )}
+                    <Box>
+                      {changeResponse()}
+                      <Alert
+                        elevation={1}
+                        sx={{
+                          mt: 2,
+                        }}
+                        severity={_ERROR}
+                      >
+                        CITY ALREADY EXISTS
+                      </Alert>
+                    </Box>
+                  )}
                   <DialogActions sx={{ padding: "0px" }}>
                     <Button variant="outlined" onClick={handleClose}>
                       Close
@@ -296,7 +278,6 @@ const Modals = ({ setCity }) => {
                     >
                       {isSubmitting ? "Adding..." : " Add Cities"}
                     </LoadingButton>
-                   
                   </DialogActions>
                 </Form>
               </div>

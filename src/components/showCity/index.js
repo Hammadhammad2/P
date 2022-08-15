@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Box } from "@mui/system";
 import { Button, Paper, Stack } from "@mui/material";
-
+import CircularProgress from "@mui/material/CircularProgress";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -30,21 +30,10 @@ const ShowCity = () => {
       userID: user,
     },
   });
-  useEffect(() => {
-    refetch();
-  }, [data]);
 
-  const [deleteCities, { data: deleteData, error: deleteError }] =
-    useMutation(DELETE_QUERY);
+  const [deleteCities] = useMutation(DELETE_QUERY);
 
-  if (deleteData) {
-    console.log(deleteData);
-  }
-  if (deleteError) {
-    console.log({ deleteError });
-  }
-
-  if (loading) return <h1>loading</h1>;
+  if (loading) return <CircularProgress />;
 
   if (error) {
     console.log({ error });
@@ -52,11 +41,9 @@ const ShowCity = () => {
 
   return (
     <>
-      
       <Box sx={box1}>
-
         <Box sx={box2}>
-        <Modals />  
+          <Modals />
           <Paper elevation={20} sx={{ padding: "20px", mt: "30px" }}>
             <Box
               sx={{
@@ -110,7 +97,6 @@ const ShowCity = () => {
                                       console.log(city._id);
                                       data.cities.filter(
                                         (c) => c._id !== city._id
-                                        
                                       );
                                       refetch();
                                     })

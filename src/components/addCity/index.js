@@ -20,7 +20,7 @@ const City = () => {
   const user = localStorage.getItem("token");
   const id = localStorage.getItem("userId");
 
-  const [resposne, setResponse] = useState();
+  const [response, setResponse] = useState();
 
   const [displayLocations, setDisplayLocations] = useState([]);
   const [location, setLocation] = useState([]);
@@ -43,7 +43,7 @@ const City = () => {
     setTimeout(() => {
       setResponse(null);
       return;
-    }, 3000);
+    }, 4000);
   };
   useEffect(() => {
     getCitiesRequest(delayValue, inputValue)
@@ -92,12 +92,11 @@ const City = () => {
                   .then((res) => {
                     location.push(newValue);
                   })
-                  .catch(( error ) => {
+                  .catch((error) => {
                     console.log({ error });
                     setResponse({ error });
                   });
               }
-             
             }}
             inputValue={inputValue}
             onInputChange={(event, newInputValue) => {
@@ -111,7 +110,19 @@ const City = () => {
               <TextField {...params} label="Search Location" />
             )}
           />
-         
+
+          {changeResponse()}
+          {response && (
+            <Alert
+              elevation={1}
+              sx={{
+                mt: 2,
+              }}
+              severity={_ERROR}
+            >
+              CITY ALREADY EXISTS
+            </Alert>
+          )}
         </Paper>
         <Paper
           sx={{

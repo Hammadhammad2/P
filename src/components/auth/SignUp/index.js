@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import SignUpForm from "./SignUpForm";
 
 import AccountIcon from "../../../utils/icons";
@@ -8,15 +8,9 @@ import { Alert, Avatar, Button, Grid, Paper, Typography } from "@mui/material";
 import { SIGNUP_SUCCESSFUL } from "./constants";
 import { Formik } from "formik";
 import { Link } from "react-router-dom";
-import { useMutation, useQuery } from "@apollo/client";
-
+import { useMutation } from "@apollo/client";
 import { SIGN_Up_USER } from "../../../graphql/mutations";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Box } from "@mui/system";
-
-const paperStyle = { padding: "30px 20px", width: 400, margin: "150px auto" };
-const headerStyle = { margin: 0 };
-const avatarStyle = { backgroundColor: "#1877f2" };
 
 const SignUp = () => {
   const [response, setResponse] = useState();
@@ -48,12 +42,15 @@ const SignUp = () => {
   };
   return (
     <Grid align="center">
-      <Paper elevation={10} style={paperStyle}>
+      <Paper
+        elevation={10}
+        sx={{ padding: "30px 20px", width: 400, margin: "150px auto" }}
+      >
         <Grid>
-          <Avatar style={avatarStyle}>
+          <Avatar sx={{ backgroundColor: "#1877f2" }}>
             <AccountIcon />
           </Avatar>
-          <h2 style={headerStyle}> Sign Up</h2>
+          <h2 sx={{ margin: 0 }}> Sign Up</h2>
           <Typography variant="caption">Create an Account</Typography>
         </Grid>
         <Formik

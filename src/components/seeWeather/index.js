@@ -38,17 +38,6 @@ const SeeWeather = () => {
     console.log(error);
   }
 
-  // useEffect(() => {
-  //   getCities(user)
-  //     .then((res) => {
-  //       setCities(res);
-  //       setIsFetch(true);
-  //     })
-  //     .catch((res) => {
-  //       console.log(res);
-  //     });
-  // }, []);
-
   const handleChange = (event) => {
     setCity(event.target.value);
     const city = data.cities.find((city) => city._id === event.target.value);
