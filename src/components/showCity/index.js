@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/system";
-import { Button, Paper, Stack } from "@mui/material";
+import { Button, Divider, Paper, Stack } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -57,7 +57,17 @@ const ShowCity = () => {
               {data.cities.length > 0 ? (
                 <TableContainer component={Paper} elevation={0}>
                   <Table
-                    sx={{ minWidth: 500, fontSize: "10px" }}
+                    sx={{
+                      minWidth: 300,
+                      fontSize: "10px",
+                      width: {
+                        xs: 400,
+                        sm: 600,
+                        md: 650,
+                        lg: 880,
+                        xl: 1090,
+                      },
+                    }}
                     aria-label="simple table"
                   >
                     <TableHead>
@@ -129,37 +139,49 @@ const ShowCity = () => {
               )}
             </Box>
           </Paper>
-          <Stack direction="row" justifyContent="center" spacing={3}>
-            <Box>
+          <Stack
+            sx={{
+              padding: "4px",
+              mt: 3,
+            }}
+            direction="row"
+            divider={<Divider orientation="vertical" flexItem />}
+            spacing={2}
+          >
+            <Button
+              sx={{
+                border: "2px white solid",
+                marginLeft: "30px",
+                color: "white",
+                width: "180px",
+                "&:hover": {
+                  color: "#fff",
+                },
+              }}
+              component={Link}
+              to="/SeeWeather"
+              variant="outlined"
+            >
+              Show Weather
+            </Button>
+
+            {user && (
               <Button
-                component={Link}
-                to="/SeeWeather"
-                variant="outlined"
                 sx={{
-                  width: "200px",
-                  margin: "50px 0px",
-                  color: "white",
                   border: "2px white solid",
+                  marginLeft: "30px",
+                  color: "white",
+                  width: "180px",
+                  "&:hover": {
+                    color: "#DCDCDC",
+                  },
                 }}
+                onClick={handleLogout}
+                variant="outlinded"
               >
-                Show Weather
+                Logout
               </Button>
-              {user && (
-                <Button
-                  onClick={handleLogout}
-                  variant="contained"
-                  sx={{
-                    width: "200px",
-                    margin: "50px 0px",
-                    color: "white",
-                    border: "2px white solid",
-                    ml: 5,
-                  }}
-                >
-                  Logout
-                </Button>
-              )}
-            </Box>
+            )}
           </Stack>
         </Box>
       </Box>

@@ -24,6 +24,7 @@ export const ADD_CITY = gql`
       label
       lat
       lon
+      placeId
     }
   }
 `;

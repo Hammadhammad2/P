@@ -23,16 +23,12 @@ const City = () => {
   const [response, setResponse] = useState();
 
   const [displayLocations, setDisplayLocations] = useState([]);
-  const [location, setLocation] = useState([]);
+  const [location] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [delayValue] = useDebounce(inputValue, 1000);
 
-  var [addCities, { data, loading, error }] = useMutation(ADD_CITY);
+  var [addCities, { loading }] = useMutation(ADD_CITY);
   if (loading) console.log(loading);
-
-  // if (error) {
-  //   console.log({ error });
-  // }
 
   const handleLogout = () => {
     localStorage.clear();
@@ -71,6 +67,13 @@ const City = () => {
           sx={{
             padding: "20px",
             marginBottom: "20px",
+            width: {
+              xs: 390,
+              sm: 430,
+              md: 630,
+              lg: 730,
+              xl: 1130,
+            },
           }}
           elevation={5}
         >
@@ -124,9 +127,17 @@ const City = () => {
             </Alert>
           )}
         </Paper>
+
         <Paper
           sx={{
             padding: "20px",
+            width: {
+              xs: 390,
+              sm: 430,
+              md: 630,
+              lg: 730,
+              xl: 1130,
+            },
           }}
           elevation={5}
         >
@@ -205,12 +216,38 @@ const City = () => {
               divider={<Divider orientation="vertical" flexItem />}
               spacing={2}
             >
-              <Button component={Link} to="/ShowCity" variant="contained">
+              <Button
+                component={Link}
+                to="/ShowCity"
+                variant="contained"
+                sx={{
+                  height: {
+                    xs: "40px",
+                  },
+                  width: {
+                    xs: "170px",
+                  },
+                  "&:hover": {
+                    color: "#fff",
+                  },
+                }}
+              >
                 View All Cities
               </Button>
               {user && (
                 <Button
-                  sx={{ width: "140px" }}
+                  sx={{
+                    height: {
+                      xs: "40px",
+                    },
+                    width: {
+                      xs: "150px",
+                      md: "140px",
+                      lg: "140px",
+                      xl: "140px",
+                      sm: "140px",
+                    },
+                  }}
                   onClick={handleLogout}
                   variant="contained"
                 >

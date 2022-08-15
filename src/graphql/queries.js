@@ -20,6 +20,7 @@ export const GET_ALL_CITIES = gql`
       _id
       lat
       lon
+      placeId
     }
   }
 `;

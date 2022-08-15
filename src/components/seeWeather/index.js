@@ -62,8 +62,23 @@ const SeeWeather = () => {
   return (
     <Box sx={box1}>
       <Box sx={box2}>
-        <Box sx={{ minWidth: 120, margin: "50px" }}>
-          <Paper elevation={2} sx={{ padding: "20px" }}>
+        <Box sx={{ minWidth: 120, margin: "30px" }}>
+          <Paper
+            elevation={2}
+            sx={{
+              padding: "20px",
+              width: {
+                xs: 420,
+                sm: 420,
+                md: 530,
+                lg: 830,
+                xl: 930,
+              },
+              ml: {
+                xl: 10,
+              },
+            }}
+          >
             {data.cities.length > 0 ? (
               <Box>
                 {data.cities.length > 0 ? (
@@ -104,7 +119,10 @@ const SeeWeather = () => {
         <Box textAlign="center">
           {user && (
             <Button
-              sx={{ width: "140px", Color: "white" }}
+              sx={{
+                width: { xl: "140px" },
+                Color: "white",
+              }}
               onClick={handleLogout}
               variant="contained"
             >

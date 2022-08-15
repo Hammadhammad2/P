@@ -8,8 +8,15 @@ const weatherCard = (weather) => {
       <Paper
         elevation={20}
         sx={{
-          width: "500px",
+          width: {
+            xs: "400px",
+            sm: "400px",
+            md: 500,
+            lg: "500px",
+            xl: "500px",
+          },
           marginTop: "10px",
+
           padding: "30px",
           borderRadius: "25px",
           borderColor: "error.main",
@@ -21,8 +28,16 @@ const weatherCard = (weather) => {
             component="img"
             src={weather.img}
             sx={{
-              maxHeight: "200px",
-              maxWidth: "200px",
+              maxHeight: {
+                xl: "200px",
+                sm: 150,
+                xs: 130,
+              },
+              maxWidth: {
+                xl: "200px",
+                sm: 150,
+                xs: 130,
+              },
               verticalAlign: "middle",
               paddingRight: "20px",
             }}

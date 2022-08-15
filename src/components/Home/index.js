@@ -30,7 +30,7 @@ const Home = () => {
               {!user && (
                 <Button
                   sx={{
-                    color: "white",
+                    backgroundColor: "white",
                     border: "2px white solid",
                     hover: "golden",
                     marginLeft: "30px",
@@ -46,8 +46,8 @@ const Home = () => {
               {!user && (
                 <Button
                   sx={{
-                    color: "white",
-                    border: "2px white solid",
+                    backgroundColor: "white",
+                    border: "3px  #1877f2 solid",
                     width: "180px",
                   }}
                   component={Link}
@@ -60,12 +60,15 @@ const Home = () => {
               {user && (
                 <Button
                   sx={{
-                    color: "white",
-                    border: "2px white solid",
-                    hieght: "10px",
+                    border: "2px  #1877f2 solid",
+                    backgroundColor: "white",
+                    color: "#1877f2",
+                    "&:hover": {
+                      color: "#fff",
+                    },
                   }}
                   onClick={handleLogout}
-                  variant="outlined"
+                  variant="contained"
                 >
                   Logout
                 </Button>
