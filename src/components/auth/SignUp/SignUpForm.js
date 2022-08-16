@@ -24,11 +24,18 @@ import {
   ENTER_PHONENO,
   CONFIRMPASSWORD,
   ENTER_CONFIRMPASSWORD,
+  SIGNUP,
 } from "./constants";
-import { Grid, TextField, Button, Divider } from "@mui/material";
+import {
+  Grid,
+  TextField,
+  Button,
+  Divider,
+  CircularProgress,
+} from "@mui/material";
 
 const SignUpForm = (props) => {
-  const { touched, errors, values, handleSubmit } = props;
+  const { touched, errors, values, handleSubmit, loading } = props;
   return (
     <Form onSubmit={handleSubmit} autoComplete="off">
       <Grid container direction={"column"} spacing={3}>
@@ -107,12 +114,19 @@ const SignUpForm = (props) => {
         </Grid>
         <Grid item>
           <Button
+            disabled={loading}
             type={_SUBMIT}
             variant={_CONTAINED}
             color={_PRIMARY}
             fullWidth
+            sx={{
+              "&:hover": {
+                color: "#fff",
+                backgroundColor: "#64b5f6",
+              },
+            }}
           >
-            SIGNUP
+            {loading ? <CircularProgress color={_PRIMARY} size={24} /> : SIGNUP}
           </Button>
           <Divider sx={{ margin: "15px" }} orientation="horizontal">
             OR

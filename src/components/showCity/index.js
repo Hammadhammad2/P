@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/system";
-import { Button, Divider, Paper, Stack } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -19,11 +19,6 @@ import { DELETE_QUERY } from "../../graphql/mutations.js";
 
 const ShowCity = () => {
   const user = localStorage.getItem("userId");
-
-  const handleLogout = () => {
-    localStorage.clear();
-    window.location.replace("/login");
-  };
 
   const { data, loading, error, refetch } = useQuery(GET_ALL_CITIES, {
     variables: {
@@ -65,7 +60,7 @@ const ShowCity = () => {
                         sm: 410,
                         md: 650,
                         lg: 880,
-                        xl: 1090,
+                        xl: 1050,
                       },
                     }}
                     aria-label="simple table"
@@ -101,8 +96,8 @@ const ShowCity = () => {
                                     xs: 100,
                                     sm: 100,
                                     md: 150,
-                                    lg: 150,
-                                    xl: 150,
+                                    lg: 200,
+                                    xl: 200,
                                   },
                                 }}
                                 onClick={() => {
@@ -148,20 +143,15 @@ const ShowCity = () => {
               )}
             </Box>
           </Paper>
-          <Stack
-            sx={{
-              padding: "4px",
-              mt: 3,
-            }}
-            direction="row"
-            divider={<Divider orientation="vertical" flexItem />}
-            spacing={2}
-          >
+
+          <Box textAlign="center" sx={{ py: 3 }}>
             <Button
+              textAlign="center"
               sx={{
                 border: "2px white solid",
                 marginLeft: "30px",
                 color: "white",
+                textAlign: "center",
                 width: "180px",
                 "&:hover": {
                   color: "#fff",
@@ -173,25 +163,7 @@ const ShowCity = () => {
             >
               Show Weather
             </Button>
-
-            {user && (
-              <Button
-                sx={{
-                  border: "2px white solid",
-                  marginLeft: "30px",
-                  color: "white",
-                  width: "180px",
-                  "&:hover": {
-                    color: "#DCDCDC",
-                  },
-                }}
-                onClick={handleLogout}
-                variant="outlinded"
-              >
-                Logout
-              </Button>
-            )}
-          </Stack>
+          </Box>
         </Box>
       </Box>
     </>

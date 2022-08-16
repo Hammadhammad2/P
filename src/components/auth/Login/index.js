@@ -12,7 +12,7 @@ import { useState } from "react";
 import { _ERROR, _SUCCESS } from "../../../utils/Constants";
 
 const Login = () => {
-  const [LoginUser, { data }] = useMutation(LOGIN_USER);
+  const [LoginUser, { data, loading }] = useMutation(LOGIN_USER);
   const [response, setResponse] = useState();
   const changeResponse = () => {
     setTimeout(() => {
@@ -68,7 +68,7 @@ const Login = () => {
               {(props) => {
                 return (
                   <>
-                    <LoginForm {...props} />
+                    <LoginForm loading={loading} {...props} />
                   </>
                 );
               }}

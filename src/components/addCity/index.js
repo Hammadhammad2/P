@@ -30,11 +30,6 @@ const City = () => {
   var [addCities, { loading }] = useMutation(ADD_CITY);
   if (loading) console.log(loading);
 
-  const handleLogout = () => {
-    localStorage.clear();
-    window.location.replace("/login");
-  };
-
   useEffect(() => {
     getCitiesRequest(delayValue, inputValue)
       .then((search) => {
@@ -228,26 +223,6 @@ const City = () => {
               >
                 View All Cities
               </Button>
-              {user && (
-                <Button
-                  sx={{
-                    height: {
-                      xs: "40px",
-                    },
-                    width: {
-                      xs: "150px",
-                      md: "140px",
-                      lg: "140px",
-                      xl: "140px",
-                      sm: "140px",
-                    },
-                  }}
-                  onClick={handleLogout}
-                  variant="contained"
-                >
-                  Logout
-                </Button>
-              )}
             </Stack>
           </Paper>
         </Paper>

@@ -7,7 +7,6 @@ import {
   _PASSWORD,
   _EMAIL,
   _SUBMIT,
-  _SECONDARY,
   _PRIMARY,
   _CONTAINED,
 } from "../../../utils/Constants";
@@ -18,7 +17,8 @@ import {
   ENTER_EMAIL,
   ENTER_PASSWORD,
 } from "./constants";
-import { Grid, TextField, Button, Divider, Link } from "@mui/material";
+import { Grid, TextField, Button, Divider } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const LoginForm = (props) => {
   const { touched, errors, loading, values, handleSubmit } = props;
@@ -60,14 +60,15 @@ const LoginForm = (props) => {
             disabled={loading}
             type={_SUBMIT}
             variant={_CONTAINED}
-            color={_PRIMARY}
             fullWidth
+            sx={{
+              "&:hover": {
+                color: "#fff",
+                backgroundColor: "#64b5f6",
+              },
+            }}
           >
-            {loading ? (
-              <CircularProgress color={_SECONDARY} size={24} />
-            ) : (
-              LOGIN
-            )}
+            {loading ? <CircularProgress color={_PRIMARY} size={24} /> : LOGIN}
           </Button>
           <Divider sx={{ margin: "15px" }} orientation="horizontal">
             OR
@@ -78,6 +79,12 @@ const LoginForm = (props) => {
             variant="contained"
             color="primary"
             fullWidth
+            sx={{
+              "&:hover": {
+                color: "#fff",
+                backgroundColor: "#64b5f6",
+              },
+            }}
           >
             Sign up
           </Button>
