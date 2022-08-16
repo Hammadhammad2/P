@@ -10,13 +10,11 @@ import { Formik } from "formik";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { SIGN_Up_USER } from "../../../graphql/mutations";
-import CircularProgress from "@mui/material/CircularProgress";
 
 const SignUp = () => {
   const [response, setResponse] = useState();
   var [signUpUser, { loading }] = useMutation(SIGN_Up_USER);
 
-  if (loading) return <CircularProgress />;
   const SubmitForm = (data, { resetForm }) => {
     console.log(data);
     signUpUser({
@@ -61,10 +59,7 @@ const SignUp = () => {
           {(props) => {
             return (
               <>
-                <SignUpForm
-                  //loading={loading}
-                  {...props}
-                />
+                <SignUpForm loading={loading} {...props} />
                 <Button
                   component={Link}
                   to="/Login"
@@ -74,10 +69,11 @@ const SignUp = () => {
                   sx={{
                     "&:hover": {
                       color: "#fff",
+                      backgroundColor: "#64b5f6",
                     },
                   }}
                 >
-                  lOGIN
+                  Login
                 </Button>
               </>
             );

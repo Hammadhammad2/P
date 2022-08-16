@@ -29,10 +29,6 @@ const SeeWeather = () => {
   const [response, setResponse] = useState();
 
   const user = localStorage.getItem("userId");
-  const handleLogout = () => {
-    localStorage.clear();
-    window.location.replace("/login");
-  };
 
   const { data, loading, error, refetch } = useQuery(GET_ALL_CITIES, {
     variables: {
@@ -122,6 +118,17 @@ const SeeWeather = () => {
             ) : (
               <Box sx={{ width: "100%" }}>
                 <LinearProgress />
+                <h2
+                  className="mt-6"
+                  style={{
+                    color: "#ef5350",
+                    font: "Monospace",
+                    fontStyle: "italic",
+                    textAlign: "center",
+                  }}
+                >
+                  No Cities Added
+                </h2>
               </Box>
             )}
 
@@ -139,20 +146,6 @@ const SeeWeather = () => {
           </Paper>
         </Box>
         <div>{weather && <WeatherCard {...weather} />}</div>
-        <Box textAlign="center">
-          {user && (
-            <Button
-              sx={{
-                width: { xl: "140px" },
-                Color: "white",
-              }}
-              onClick={handleLogout}
-              variant="contained"
-            >
-              Logout
-            </Button>
-          )}
-        </Box>
       </Box>
     </Box>
   );
