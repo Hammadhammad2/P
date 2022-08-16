@@ -16,6 +16,7 @@ const weatherCard = (weather) => {
             xl: "500px",
           },
           marginTop: "10px",
+          backgroundColor: "blue",
 
           padding: "30px",
           borderRadius: "25px",
@@ -48,7 +49,7 @@ const weatherCard = (weather) => {
               sx={{
                 fontSize: "90px",
                 fontWeight: "500",
-                color: "#158FFA",
+                color: "white",
               }}
             >
               {weather.temp + "\u00b0C"}

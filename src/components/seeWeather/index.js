@@ -52,7 +52,7 @@ const SeeWeather = () => {
         const data = res;
         console.log(data);
         setWeather({
-          img: `https://openweathermap.org/img/w/${data.weather[0].icon}.png`,
+          img: `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
           humidity: data.main.humidity,
           windSpeed: data.wind.speed,
           type: data.weather[0].main,

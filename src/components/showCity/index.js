@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/system";
-import { Button, Paper } from "@mui/material";
+import { Button, Paper, Stack, Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -34,6 +34,23 @@ const ShowCity = () => {
     console.log({ error });
   }
 
+  const deleteCurrentCity = (event, city) => {
+    deleteCities({
+      variables: {
+        cityId: city._id,
+      },
+    })
+      .then((deleteData) => {
+        console.log(deleteData);
+        console.log(city._id);
+        data.cities.filter((c) => c._id !== city._id);
+        refetch();
+      })
+      .catch(({ deleteError }) => {
+        console.log({ deleteError });
+      });
+  };
+
   return (
     <>
       <Box sx={box1}>
@@ -50,96 +67,66 @@ const ShowCity = () => {
               }}
             >
               {data.cities.length > 0 ? (
-                <TableContainer component={Paper} elevation={0}>
-                  <Table
-                    sx={{
-                      minWidth: 300,
-                      fontSize: "10px",
-                      width: {
-                        xs: 400,
-                        sm: 410,
-                        md: 650,
-                        lg: 880,
-                        xl: 1050,
-                      },
-                    }}
-                    aria-label="simple table"
-                  >
-                    <TableHead>
-                      <TableRow>
-                        <TableCell sx={{ border: 1 }} component="th">
-                          City Name
-                        </TableCell>
-                        <TableCell sx={{ border: 1 }} component="th">
-                          Options
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {data.cities.map((city, index) => (
-                        <TableRow
-                          key={index}
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                          }}
-                        >
-                          <TableCell>{city.label}</TableCell>
-
-                          <TableCell>
-                            {
-                              <Button
-                                variant="contained"
-                                color="primary"
-                                fullWidth
-                                sx={{
-                                  width: {
-                                    xs: 100,
-                                    sm: 100,
-                                    md: 150,
-                                    lg: 200,
-                                    xl: 200,
-                                  },
-                                }}
-                                onClick={() => {
-                                  deleteCities({
-                                    variables: {
-                                      cityId: city._id,
-                                    },
-                                  })
-                                    .then((deleteData) => {
-                                      console.log(deleteData);
-                                      console.log(city._id);
-                                      data.cities.filter(
-                                        (c) => c._id !== city._id
-                                      );
-                                      refetch();
-                                    })
-                                    .catch(({ deleteError }) => {
-                                      console.log({ deleteError });
-                                    });
-                                }}
-                              >
-                                Delete
-                              </Button>
-                            }
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              ) : (
-                <h5
-                  style={{
-                    color: "#158FFA",
-                    textAlign: "center",
-                    bgcolor: "black",
-                    font: "40px Open Sans bold",
-                    border: " 1px solid #158FFA",
-                  }}
+                <Paper
+                  sx={{ padding: "10px", marginBottom: "16px" }}
+                  variant="outlined"
                 >
-                  No Cities Added
-                </h5>
+                  <Stack direction="row" alignItems="center">
+                    <Typography
+                      sx={{ fontWeight: 600, color: "#0d6efd" }}
+                      flex={3}
+                    >
+                      City Name
+                    </Typography>
+                    <Typography
+                      sx={{ fontWeight: 600, color: "#0d6efd" }}
+                      flex={1}
+                    >
+                      Action
+                    </Typography>
+                  </Stack>
+                </Paper>
+              ) : (
+                <Paper variant="outlined" sx={{ padding: "10px" }}>
+                  <Typography
+                    sx={{
+                      fontWeight: 600,
+                      color: "#0d6efd",
+                      textAlign: "center",
+                    }}
+                  >
+                    No Cities Found
+                  </Typography>
+                </Paper>
+              )}
+              {data.cities.length > 0 && (
+                <Stack direction="column" spacing={2}>
+                  {data.cities.map((city, index) => (
+                    <Paper variant="outlined" sx={{ padding: "10px" }}>
+                      <Stack direction="row" alignItems="center">
+                        <Typography flex={3}>{city.label}</Typography>
+                        <Button
+                          flex={1}
+                          variant="contained"
+                          color="primary"
+                          fullWidth
+                          sx={{
+                            width: {
+                              xs: 100,
+                              sm: 100,
+                              md: 150,
+                              lg: 200,
+                              xl: 200,
+                            },
+                          }}
+                          onClick={(event) => deleteCurrentCity(event, city)}
+                        >
+                          Delete
+                        </Button>
+                      </Stack>
+                    </Paper>
+                  ))}
+                </Stack>
               )}
             </Box>
           </Paper>

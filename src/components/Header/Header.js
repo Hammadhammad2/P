@@ -38,7 +38,7 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static" elevation={20}>
+    <AppBar position="sticky" elevation={20}>
       <Toolbar sx={{ padding: "0px 40px" }} disableGutters elevation={20}>
         <AirOutlinedIcon
           size="large"
