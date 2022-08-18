@@ -1,13 +1,7 @@
 import React from "react";
 import { Box } from "@mui/system";
-import { Button, Paper, Stack, Typography } from "@mui/material";
+import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 
 import { Link } from "react-router-dom";
 import { box1, box2 } from "../../styles.js";
@@ -63,12 +57,18 @@ const ShowCity = () => {
                 display: "flex",
                 flexDirection: "column",
                 height: 500,
-                overflow: "hidden",
+                overflow: "auto",
               }}
             >
               {data.cities.length > 0 ? (
                 <Paper
-                  sx={{ padding: "10px", marginBottom: "16px" }}
+                  sx={{
+                    padding: "10px",
+                    marginBottom: "16px",
+                    position: "sticky",
+                    top: "0px",
+                    zIndex: 9,
+                  }}
                   variant="outlined"
                 >
                   <Stack direction="row" alignItems="center">
@@ -78,6 +78,7 @@ const ShowCity = () => {
                     >
                       City Name
                     </Typography>
+
                     <Typography
                       sx={{ fontWeight: 600, color: "#0d6efd" }}
                       flex={1}

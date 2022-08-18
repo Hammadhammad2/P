@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TextField from "@mui/material/TextField";
-import { Autocomplete } from "@mui/material";
+import { Autocomplete, Collapse, Grow, List, Typography } from "@mui/material";
 import { useDebounce } from "use-debounce";
 import { Paper, Button, Alert, Box, Stack, Divider } from "@mui/material";
 import Table from "@mui/material/Table";
@@ -15,6 +15,7 @@ import { getCitiesRequest } from "../../services/addCity";
 import { useMutation } from "@apollo/client";
 import { ADD_CITY } from "../../graphql/mutations";
 import { box1, box2 } from "../../styles.js";
+import { TransitionGroup } from "react-transition-group";
 
 const City = () => {
   const user = localStorage.getItem("token");
@@ -23,7 +24,7 @@ const City = () => {
   const [response, setResponse] = useState();
 
   const [displayLocations, setDisplayLocations] = useState([]);
-  const [location] = useState([]);
+  const [location, setLocation] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [delayValue] = useDebounce(inputValue, 1000);
 
@@ -48,6 +49,13 @@ const City = () => {
         console.log(err);
       });
   }, [delayValue]);
+
+  const dummy = useRef(null);
+  useEffect(() => {
+    if (dummy) {
+      if (dummy.current) dummy.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [location]);
 
   return (
     <Box sx={box1}>
@@ -76,14 +84,16 @@ const City = () => {
                 if (user) {
                   newValue["userId"] = id;
                 }
-                console.log(newValue);
+
                 addCities({
                   variables: {
                     newCity: newValue,
                   },
                 })
                   .then((res) => {
-                    location.push(newValue);
+                    setLocation((prev) => [...prev, newValue]);
+
+                    //location.push(newValue);
                   })
                   .catch((error) => {
                     setResponse(error.message);
@@ -136,68 +146,30 @@ const City = () => {
               display: "flex",
               flexDirection: "column",
               height: 400,
-              overflow: "hidden",
-              overflowY: "scroll",
+              overflow: "auto",
               borderColor: "secondary.main",
             }}
           >
-            {location.length > 0 ? (
-              <TableContainer component={Box} elevation={6}>
-                <Table
-                  sx={{ minWidth: 500, fontSize: "10px" }}
-                  aria-label="simple table"
-                >
-                  <TableHead>
-                    <TableRow>
-                      <TableCell
-                        sx={{
-                          border: 1,
-                          fontSize: "20pt",
-                          backgroundColor: "primary",
-                        }}
-                        component="th"
-                      >
-                        City Names
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {location.map((loc, index) => (
-                      <TableRow
-                        key={index}
-                        sx={{
-                          "&:last-child td, &:last-child th": {
-                            mt: 2,
-                          },
-                        }}
-                      >
-                        <TableCell
-                          sx={{
-                            border: 0,
-                            mt: 2,
-                            backgroundColor: "#eeeeee",
-                          }}
-                        >
-                          {loc.label}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            ) : (
-              <h4
-                style={{
-                  color: "#ef5350",
-                  font: "Monospace",
-                  fontStyle: "italic",
-                  textAlign: "center",
-                }}
-              >
-                No Cities Added
-              </h4>
+            {location.length > 0 && (
+              <Stack direction="column" spacing={2}>
+                {location.map((loc, index) => (
+                  <Grow in timeout={600} key={index}>
+                    <Paper
+                      variant="outlined"
+                      sx={{ padding: "10px" }}
+                      className="bg-gray-100"
+                    >
+                      <Stack direction="row" alignItems="center">
+                        <Typography flex={3}> {loc.label}</Typography>
+                      </Stack>
+                    </Paper>
+                  </Grow>
+                ))}
+                <div ref={dummy} />
+              </Stack>
             )}
           </Box>
+
           <Divider />
           <Paper elevation={0} sx={{ mt: 2, mr: 2, ml: 2 }}>
             <Stack
@@ -206,6 +178,7 @@ const City = () => {
               spacing={2}
             >
               <Button
+                className="bg-slate-700"
                 component={Link}
                 to="/ShowCity"
                 variant="contained"

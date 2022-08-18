@@ -45,7 +45,7 @@ const SignUp = () => {
         sx={{ padding: "30px 20px", width: 400, margin: "150px auto" }}
       >
         <Grid>
-          <Avatar sx={{ backgroundColor: "#1877f2" }}>
+          <Avatar sx={{ background: "#1877f2" }}>
             <AccountIcon />
           </Avatar>
           <h2 sx={{ margin: 0 }}> Sign Up</h2>
@@ -69,7 +69,7 @@ const SignUp = () => {
                   sx={{
                     "&:hover": {
                       color: "#fff",
-                      backgroundColor: "#64b5f6",
+                      background: "#64b5f6",
                     },
                   }}
                 >

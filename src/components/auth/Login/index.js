@@ -52,7 +52,7 @@ const Login = () => {
           elevation={10}
           sx={{ padding: "30px 20px", width: 400, margin: "150px auto" }}
         >
-          <Avatar sx={{ backgroundColor: "#1877f2" }}>
+          <Avatar sx={{ background: "#1877f2" }}>
             <AccountIcon></AccountIcon>
           </Avatar>
           <h2 sx={{ margin: 0 }}> Sign In</h2>

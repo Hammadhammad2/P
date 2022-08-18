@@ -9,7 +9,7 @@ export const box1 = {
 };
 
 export const box2 = {
-  backgroundColor: "rgba(0, 0, 0, 0.4)",
+  background: "rgba(0, 0, 0, 0.4)",
   padding: {
     xs: "200px 40px",
     sm: "200px 125px",

@@ -122,7 +122,7 @@ const SignUpForm = (props) => {
             sx={{
               "&:hover": {
                 color: "#fff",
-                backgroundColor: "#64b5f6",
+                background: "#64b5f6",
               },
             }}
           >

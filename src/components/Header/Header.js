@@ -6,7 +6,6 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 
@@ -74,19 +73,18 @@ const Header = () => {
           sx={{ display: { xs: "none", md: "flex" } }}
         >
           {pages.map((page, index) => (
-            <Stack direction="row" alignItems="center">
+            <Stack key={index} direction="row" alignItems="center">
               <Button
                 component={Link}
                 to={`/${page}`}
                 key={page}
                 onClick={handleCloseNavMenu}
-                backgroundColor="white"
                 sx={{
                   my: 2,
                   color: "white",
                   display: "block",
                   "&:hover": {
-                    backgroundColor: "#fff",
+                    background: "#fff",
                     boxShadow: 2,
                   },
                 }}
@@ -144,7 +142,7 @@ const Header = () => {
                     textDecoration: "none",
                     color: "white",
                     "&:hover": {
-                      backgroundColor: "#64b5f6",
+                      background: "#64b5f6",
                       boxShadow: 2,
                     },
                   }}
@@ -191,7 +189,7 @@ const Header = () => {
                 display: "block",
                 fontStyle: "italic",
                 "&:hover": {
-                  backgroundColor: "#fff",
+                  background: "#fff",
                 },
                 width: "85px",
               }}
@@ -212,7 +210,7 @@ const Header = () => {
                 display: "block",
                 fontStyle: "italic",
                 "&:hover": {
-                  backgroundColor: "#fff",
+                  background: "#fff",
                 },
                 width: "85px",
                 justifyContent: "space-between",
@@ -227,7 +225,7 @@ const Header = () => {
                 color: "white",
                 boxShadow: "none",
                 "&:hover": {
-                  backgroundColor: "white",
+                  background: "white",
                   color: "#1877f2",
                   boxShadow: "none",
                 },
@@ -253,7 +251,7 @@ const Header = () => {
                 display: "block",
                 fontStyle: "italic",
                 "&:hover": {
-                  backgroundColor: "#fff",
+                  background: "#fff",
                 },
                 width: "85px",
               }}
@@ -274,7 +272,7 @@ const Header = () => {
                 display: "block",
                 fontStyle: "italic",
                 "&:hover": {
-                  backgroundColor: "#fff",
+                  background: "#fff",
                 },
                 width: "85px",
                 justifyContent: "space-between",
@@ -289,7 +287,7 @@ const Header = () => {
                 color: "white",
                 boxShadow: "none",
                 "&:hover": {
-                  backgroundColor: "white",
+                  background: "white",
                   color: "#1877f2",
                   boxShadow: "none",
                 },

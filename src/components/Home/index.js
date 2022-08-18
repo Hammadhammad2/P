@@ -54,7 +54,7 @@ const Home = () => {
               {!user && (
                 <Button
                   sx={{
-                    backgroundColor: "white",
+                    background: "white",
                     border: "2px white solid",
                     "&:hover": {
                       color: "#fff",
@@ -73,7 +73,7 @@ const Home = () => {
               {!user && (
                 <Button
                   sx={{
-                    backgroundColor: "white",
+                    background: "white",
                     "&:hover": {
                       color: "#fff",
                       border: "2px white solid",
@@ -91,7 +91,7 @@ const Home = () => {
                 <Button
                   sx={{
                     border: "2px  #1877f2 solid",
-                    backgroundColor: "white",
+                    background: "white",
                     color: "#1877f2",
                     "&:hover": {
                       color: "#fff",

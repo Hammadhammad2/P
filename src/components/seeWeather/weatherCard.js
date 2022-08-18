@@ -16,7 +16,7 @@ const weatherCard = (weather) => {
             xl: "500px",
           },
           marginTop: "10px",
-          backgroundColor: "blue",
+          background: "blue",
 
           padding: "30px",
           borderRadius: "25px",
