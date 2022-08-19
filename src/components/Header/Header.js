@@ -175,6 +175,7 @@ const Header = () => {
             sx={{
               mr: {
                 xs: -4,
+                display: { xs: "flex", md: "none" },
               },
               color: "white",
               boxShadow: "none",

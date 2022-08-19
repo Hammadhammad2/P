@@ -56,7 +56,11 @@ const SeeWeather = () => {
           humidity: data.main.humidity,
           windSpeed: data.wind.speed,
           type: data.weather[0].main,
+          name: data.name,
           temp: (data.main.temp - 273.15).toString().split(".")[0],
+          feels_like: (data.main.feels_like - 273.15).toString().split(".")[0],
+          temp_min: (data.main.temp_min - 273.15).toString().split(".")[0],
+          temp_max: (data.main.temp_max - 273.15).toString().split(".")[0],
         });
         setResponse(null);
       })
