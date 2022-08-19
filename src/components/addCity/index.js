@@ -1,21 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import TextField from "@mui/material/TextField";
-import { Autocomplete, Collapse, Grow, List, Typography } from "@mui/material";
+import { Autocomplete, Grow, Typography } from "@mui/material";
 import { useDebounce } from "use-debounce";
 import { Paper, Button, Alert, Box, Stack, Divider } from "@mui/material";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+
 import { _ERROR } from "../../utils/Constants";
 import { Link } from "react-router-dom";
 import { getCitiesRequest } from "../../services/addCity";
 import { useMutation } from "@apollo/client";
 import { ADD_CITY } from "../../graphql/mutations";
 import { box1, box2 } from "../../styles.js";
-import { TransitionGroup } from "react-transition-group";
 
 const City = () => {
   const user = localStorage.getItem("token");
@@ -65,7 +59,7 @@ const City = () => {
             padding: "20px",
             marginBottom: "20px",
             width: {
-              xs: 390,
+              xs: 315,
               sm: 430,
               md: 630,
               lg: 730,
@@ -131,7 +125,7 @@ const City = () => {
           sx={{
             padding: "20px",
             width: {
-              xs: 390,
+              xs: 315,
               sm: 430,
               md: 630,
               lg: 730,
@@ -171,33 +165,32 @@ const City = () => {
           </Box>
 
           <Divider />
-          <Paper elevation={0} sx={{ mt: 2, mr: 2, ml: 2 }}>
-            <Stack
-              direction="row"
-              divider={<Divider orientation="vertical" flexItem />}
-              spacing={2}
+
+          <Stack
+            direction="row"
+            justifyContent="center"
+            elevation={0}
+            sx={{ mt: 2 }}
+          >
+            <Button
+              component={Link}
+              to="/ShowCity"
+              variant="contained"
+              sx={{
+                height: {
+                  xs: "40px",
+                },
+                width: {
+                  xs: "170px",
+                },
+                "&:hover": {
+                  color: "#fff",
+                },
+              }}
             >
-              <Button
-                className="bg-slate-700"
-                component={Link}
-                to="/ShowCity"
-                variant="contained"
-                sx={{
-                  height: {
-                    xs: "40px",
-                  },
-                  width: {
-                    xs: "170px",
-                  },
-                  "&:hover": {
-                    color: "#fff",
-                  },
-                }}
-              >
-                View All Cities
-              </Button>
-            </Stack>
-          </Paper>
+              View All Cities
+            </Button>
+          </Stack>
         </Paper>
       </Box>
     </Box>

@@ -50,7 +50,14 @@ const Login = () => {
       <Grid align="center">
         <Paper
           elevation={10}
-          sx={{ padding: "30px 20px", width: 400, margin: "150px auto" }}
+          sx={{
+            padding: "30px 20px",
+            width: {
+              xs: 330,
+              xl: 400,
+            },
+            margin: "150px auto",
+          }}
         >
           <Avatar sx={{ background: "#1877f2" }}>
             <AccountIcon></AccountIcon>

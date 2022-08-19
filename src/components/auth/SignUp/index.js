@@ -42,7 +42,20 @@ const SignUp = () => {
     <Grid align="center">
       <Paper
         elevation={10}
-        sx={{ padding: "30px 20px", width: 400, margin: "150px auto" }}
+        sx={{
+          padding: {
+            xs: "30px",
+            xl: "30px 20px",
+          },
+          width: {
+            xs: 330,
+            xl: 400,
+          },
+          margin: {
+            xs: "30px auto",
+            xl: "100px auto",
+          },
+        }}
       >
         <Grid>
           <Avatar sx={{ background: "#1877f2" }}>
@@ -68,8 +81,22 @@ const SignUp = () => {
                   fullWidth
                   sx={{
                     "&:hover": {
-                      color: "#fff",
-                      background: "#64b5f6",
+                      md: {
+                        color: "#fff",
+                        background: "#64b5f6",
+                      },
+                      lg: {
+                        color: "#fff",
+                        background: "#64b5f6",
+                      },
+                      xl: {
+                        color: "#fff",
+                        background: "#64b5f6",
+                      },
+                      sm: {
+                        color: "#fff",
+                        background: "#64b5f6",
+                      },
                     },
                   }}
                 >

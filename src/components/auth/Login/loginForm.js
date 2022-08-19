@@ -63,8 +63,22 @@ const LoginForm = (props) => {
             fullWidth
             sx={{
               "&:hover": {
-                color: "#fff",
-                background: "#64b5f6",
+                md: {
+                  color: "#fff",
+                  background: "#64b5f6",
+                },
+                lg: {
+                  color: "#fff",
+                  background: "#64b5f6",
+                },
+                xl: {
+                  color: "#fff",
+                  background: "#64b5f6",
+                },
+                sm: {
+                  color: "#fff",
+                  background: "#64b5f6",
+                },
               },
             }}
           >
@@ -81,8 +95,22 @@ const LoginForm = (props) => {
             fullWidth
             sx={{
               "&:hover": {
-                color: "#fff",
-                background: "#64b5f6",
+                md: {
+                  color: "#fff",
+                  background: "#64b5f6",
+                },
+                lg: {
+                  color: "#fff",
+                  background: "#64b5f6",
+                },
+                xl: {
+                  color: "#fff",
+                  background: "#64b5f6",
+                },
+                sm: {
+                  color: "#fff",
+                  background: "#64b5f6",
+                },
               },
             }}
           >

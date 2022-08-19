@@ -69,13 +69,13 @@ const SeeWeather = () => {
   return (
     <Box sx={box1}>
       <Box sx={box2}>
-        <Box sx={{ minWidth: 120, margin: "30px" }}>
+        <Box sx={{ minWidth: 120 }}>
           <Paper
             elevation={2}
             sx={{
               padding: "20px",
               width: {
-                xs: 420,
+                xs: 315,
                 sm: 420,
                 md: 530,
                 lg: 830,

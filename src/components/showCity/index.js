@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/system";
 import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
 import { box1, box2 } from "../../styles.js";
 
@@ -68,6 +68,7 @@ const ShowCity = () => {
                     position: "sticky",
                     top: "0px",
                     zIndex: 9,
+                    boxShadow: 6,
                   }}
                   variant="outlined"
                 >
@@ -101,9 +102,13 @@ const ShowCity = () => {
                 </Paper>
               )}
               {data.cities.length > 0 && (
-                <Stack direction="column" spacing={2}>
+                <Stack direction="column" spacing={2} elevation={20}>
                   {data.cities.map((city, index) => (
-                    <Paper variant="outlined" sx={{ padding: "10px" }}>
+                    <Paper
+                      className="bg-gray-100"
+                      variant="outlined"
+                      sx={{ padding: "10px" }}
+                    >
                       <Stack direction="row" alignItems="center">
                         <Typography flex={3}>{city.label}</Typography>
                         <Button
@@ -112,6 +117,7 @@ const ShowCity = () => {
                           color="primary"
                           fullWidth
                           sx={{
+                            display: { xs: "none" },
                             width: {
                               xs: 100,
                               sm: 100,
@@ -124,6 +130,18 @@ const ShowCity = () => {
                         >
                           Delete
                         </Button>
+
+                        <DeleteIcon
+                          flex={1}
+                          variant="contained"
+                          color="primary"
+                          fullWidth
+                          fontSize="large"
+                          sx={{
+                            display: { xs: "flex" },
+                          }}
+                          onClick={(event) => deleteCurrentCity(event, city)}
+                        />
                       </Stack>
                     </Paper>
                   ))}
@@ -131,15 +149,17 @@ const ShowCity = () => {
               )}
             </Box>
           </Paper>
-
-          <Box textAlign="center" sx={{ py: 3 }}>
+          <Stack
+            sx={{ padding: "4px", mt: 2 }}
+            direction="row"
+            justifyContent="center"
+            divider={<Divider orientation="horizontal" flexItem />}
+            spacing={2}
+          >
             <Button
-              textAlign="center"
               sx={{
                 border: "2px white solid",
-                marginLeft: "30px",
                 color: "white",
-                textAlign: "center",
                 width: "180px",
                 "&:hover": {
                   color: "#fff",
@@ -151,7 +171,7 @@ const ShowCity = () => {
             >
               Show Weather
             </Button>
-          </Box>
+          </Stack>
         </Box>
       </Box>
     </>

@@ -8,6 +8,7 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 import MenuItem from "@mui/material/MenuItem";
 
@@ -18,6 +19,7 @@ import "../../App.css";
 import { Stack } from "@mui/material";
 
 const pages = ["ADDCITY", "SHOWCITY", "SEEWEATHER"];
+const mdpages = ["ADDCITY", "SHOWCITY", "SEEWEATHER", "LOGIN", "SIGNUP"];
 
 const Header = () => {
   const user = localStorage.getItem("token");
@@ -115,7 +117,13 @@ const Header = () => {
             onClick={handleOpenNavMenu}
             color="inherit"
           >
-            <MenuIcon />
+            <MenuIcon
+              sx={{
+                ml: {
+                  xs: -5,
+                },
+              }}
+            />
           </IconButton>
           <Menu
             id="menu-appbar"
@@ -135,38 +143,24 @@ const Header = () => {
               display: { xs: "block", md: "none" },
             }}
           >
-            {pages.map((page) => (
+            {mdpages.map((page) => (
               <MenuItem key={page} onClick={handleCloseNavMenu}>
-                <Link
-                  sx={{
-                    textDecoration: "none",
-                    color: "white",
-                    "&:hover": {
-                      background: "#64b5f6",
-                      boxShadow: 2,
-                    },
-                  }}
-                  to={`/${page}`}
-                >
-                  {page}
-                </Link>
+                <Link to={`/${page}`}>{page}</Link>
               </MenuItem>
             ))}
           </Menu>
         </Box>
-        <AirOutlinedIcon
-          size="large"
-          sx={{ display: { xs: "flex", md: "none" }, mr: 2 }}
-        />
+
         <Typography
           variant="h5"
           noWrap
           component="a"
-          href=""
+          href="/"
           sx={{
             mr: 2,
             display: { xs: "flex", md: "none" },
             flexGrow: 1,
+            fontSize: 18,
             fontFamily: "monospace",
             fontWeight: 700,
             letterSpacing: ".3rem",
@@ -176,7 +170,25 @@ const Header = () => {
         >
           WEATHER REPORT
         </Typography>
-        <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
+        {user && (
+          <LogoutIcon
+            sx={{
+              mr: {
+                xs: -4,
+              },
+              color: "white",
+              boxShadow: "none",
+              "&:hover": {
+                background: "white",
+                color: "#1877f2",
+                boxShadow: "none",
+              },
+            }}
+            onClick={handleLogout}
+            variant="contained"
+          />
+        )}
+        <Box sx={{ flexGrow: 0, display: { xs: "none", md: "none" } }}>
           {!user && (
             <Button
               component={Link}

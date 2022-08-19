@@ -9,8 +9,8 @@ const weatherCard = (weather) => {
         elevation={20}
         sx={{
           width: {
-            xs: "400px",
-            sm: "400px",
+            xs: 315,
+            sm: 420,
             md: 500,
             lg: "500px",
             xl: "500px",

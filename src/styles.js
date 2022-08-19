@@ -11,7 +11,7 @@ export const box1 = {
 export const box2 = {
   background: "rgba(0, 0, 0, 0.4)",
   padding: {
-    xs: "200px 40px",
+    xs: "150px 40px",
     sm: "200px 125px",
     md: "200px 250px",
     lg: "200px 300px",
