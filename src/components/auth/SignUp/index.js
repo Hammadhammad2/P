@@ -10,6 +10,7 @@ import { Formik } from "formik";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { SIGN_Up_USER } from "../../../graphql/mutations";
+import { paper1, signup1 } from "../styles";
 
 const SignUp = () => {
   const [response, setResponse] = useState();
@@ -40,23 +41,7 @@ const SignUp = () => {
   };
   return (
     <Grid align="center">
-      <Paper
-        elevation={10}
-        sx={{
-          padding: {
-            xs: "30px",
-            xl: "30px 20px",
-          },
-          width: {
-            xs: 330,
-            xl: 400,
-          },
-          margin: {
-            xs: "30px auto",
-            xl: "100px auto",
-          },
-        }}
-      >
+      <Paper elevation={10} sx={[paper1]}>
         <Grid>
           <Avatar sx={{ background: "#1877f2" }}>
             <AccountIcon />
@@ -79,26 +64,7 @@ const SignUp = () => {
                   variant="contained"
                   color={_PRIMARY}
                   fullWidth
-                  sx={{
-                    "&:hover": {
-                      md: {
-                        color: "#fff",
-                        background: "#64b5f6",
-                      },
-                      lg: {
-                        color: "#fff",
-                        background: "#64b5f6",
-                      },
-                      xl: {
-                        color: "#fff",
-                        background: "#64b5f6",
-                      },
-                      sm: {
-                        color: "#fff",
-                        background: "#64b5f6",
-                      },
-                    },
-                  }}
+                  sx={signup1}
                 >
                   Login
                 </Button>
