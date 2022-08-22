@@ -10,13 +10,26 @@ const weatherCard = (weather) => {
         sx={{
           padding: "10px",
           background: "rgba(9, 31, 64,0.8)",
+          height: {
+            xl: 310,
+          },
           width: {
             xs: 315,
+            sm: 550,
+            md: 550,
+            xl: 550,
           },
         }}
         borderRadius="20px"
       >
-        <Stack direction="row" spacing={3}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "nowrap",
+            borderRadius: 1,
+          }}
+        >
           <Box
             component="img"
             src={weather.img}
@@ -24,17 +37,22 @@ const weatherCard = (weather) => {
               height: 150,
               ml: {
                 xs: -2,
+                sm: 6,
+                lg: 6,
                 xl: 6,
               },
             }}
           />
+
           <Typography
             sx={{
-              mt: {
-                xs: -2,
-              },
+              mt: { xs: 3, xl: 0, md: 0, lg: 0 },
+              mr: { xs: 2 },
               fontSize: {
                 xs: "60px",
+                sm: "80px",
+                md: "100px",
+                lg: "100px",
                 xl: "100px",
               },
               fontWeight: "500",
@@ -43,7 +61,7 @@ const weatherCard = (weather) => {
           >
             {weather.temp + "\u00b0C"}
           </Typography>
-        </Stack>
+        </Box>
         <Box
           sx={{
             display: "flex",

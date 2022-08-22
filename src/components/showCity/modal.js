@@ -66,7 +66,11 @@ const Modals = () => {
       </Button>
 
       <Dialog fullWidth maxWidth="md" open={open} onClose={handleClose}>
-        <Box sx={{ padding: "20px" }}>
+        <Box
+          sx={{
+            padding: "20px",
+          }}
+        >
           <Formik
             initialValues={{
               cities: [

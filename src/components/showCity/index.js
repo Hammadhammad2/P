@@ -58,6 +58,7 @@ const ShowCity = () => {
                 flexDirection: "column",
                 height: 500,
                 overflow: "auto",
+                overflowY: "scroll",
               }}
             >
               {data.cities.length > 0 ? (
