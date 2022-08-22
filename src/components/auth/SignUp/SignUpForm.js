@@ -33,6 +33,7 @@ import {
   Divider,
   CircularProgress,
 } from "@mui/material";
+import { signup1 } from "../styles";
 
 const SignUpForm = (props) => {
   const { touched, errors, values, handleSubmit, loading } = props;
@@ -119,26 +120,7 @@ const SignUpForm = (props) => {
             variant={_CONTAINED}
             color={_PRIMARY}
             fullWidth
-            sx={{
-              "&:hover": {
-                md: {
-                  color: "#fff",
-                  background: "#64b5f6",
-                },
-                lg: {
-                  color: "#fff",
-                  background: "#64b5f6",
-                },
-                xl: {
-                  color: "#fff",
-                  background: "#64b5f6",
-                },
-                sm: {
-                  color: "#fff",
-                  background: "#64b5f6",
-                },
-              },
-            }}
+            sx={signup1}
           >
             {loading ? <CircularProgress color={_PRIMARY} size={24} /> : SIGNUP}
           </Button>

@@ -17,6 +17,7 @@ import DialogActions from "@mui/material/DialogActions";
 
 import DialogTitle from "@mui/material/DialogTitle";
 import { GET_ALL_CITIES } from "../../graphql/queries";
+import { stack1 } from "./styles";
 
 const Modals = () => {
   const id = localStorage.getItem("userId");
@@ -124,7 +125,16 @@ const Modals = () => {
                               <Stack
                                 direction="row"
                                 spacing={1}
-                                sx={{ marginBottom: "15px" }}
+                                sx={{
+                                  display: {
+                                    xs: "none",
+                                    sm: "flex",
+                                    md: "flex",
+                                    lg: "flex",
+                                    xl: "flex",
+                                    marginBottom: "15px",
+                                  },
+                                }}
                               >
                                 <Field
                                   name={`cities.${index}.placeId`}
@@ -241,6 +251,122 @@ const Modals = () => {
                                     <AddIcon />
                                   </Button>
                                 </div>
+                              </Stack>
+                              <Stack direction="column" spacing={1} sx={stack1}>
+                                <Field
+                                  name={`cities.${index}.placeId`}
+                                  id="placeId"
+                                  as={TextField}
+                                  size="small"
+                                  label="Place Id"
+                                  onChange={handleChange}
+                                  onBlur={handleBlur}
+                                  helperText={
+                                    getIn(touched, `cities[${index}].placeId`)
+                                      ? getIn(
+                                          errors,
+                                          `cities[${index}].placeId`
+                                        )
+                                      : ""
+                                  }
+                                  error={
+                                    getIn(
+                                      touched,
+                                      `cities[${index}].placeId`
+                                    ) &&
+                                    Boolean(
+                                      getIn(errors, `cities[${index}].placeId`)
+                                    )
+                                  }
+                                />
+                                <Field
+                                  name={`cities.${index}.label`}
+                                  as={TextField}
+                                  size="small"
+                                  label="City Name"
+                                  onChange={handleChange}
+                                  onBlur={handleBlur}
+                                  helperText={
+                                    getIn(touched, `cities[${index}].label`)
+                                      ? getIn(errors, `cities[${index}].label`)
+                                      : ""
+                                  }
+                                  error={
+                                    getIn(touched, `cities[${index}].label`) &&
+                                    Boolean(
+                                      getIn(errors, `cities[${index}].label`)
+                                    )
+                                  }
+                                />
+                                <Field
+                                  name={`cities.${index}.lat`}
+                                  onChange={handleChange}
+                                  as={TextField}
+                                  size="small"
+                                  label="Latitude"
+                                  onBlur={handleBlur}
+                                  helperText={
+                                    getIn(touched, `cities[${index}].lat`)
+                                      ? getIn(errors, `cities[${index}].lat`)
+                                      : ""
+                                  }
+                                  error={
+                                    getIn(touched, `cities[${index}].lat`) &&
+                                    Boolean(
+                                      getIn(errors, `cities[${index}].lat`)
+                                    )
+                                  }
+                                />
+                                <Field
+                                  name={`cities.${index}.lon`}
+                                  onChange={handleChange}
+                                  as={TextField}
+                                  size="small"
+                                  label="Longitude"
+                                  onBlur={handleBlur}
+                                  helperText={
+                                    getIn(touched, `cities[${index}].lon`)
+                                      ? getIn(errors, `cities[${index}].lon`)
+                                      : ""
+                                  }
+                                  error={
+                                    getIn(touched, `cities[${index}].lon`) &&
+                                    Boolean(
+                                      getIn(errors, `cities[${index}].lon`)
+                                    )
+                                  }
+                                />
+
+                                <Stack direction="row" spacing={2}>
+                                  <Button
+                                    sx={{ height: "40px" }}
+                                    disabled={index > 0 ? false : true}
+                                    variant={
+                                      index > 0 ? "outlined" : "contained"
+                                    }
+                                    onClick={() => arrayHelpers.remove(index)}
+                                  >
+                                    <RemoveIcon />
+                                  </Button>
+
+                                  {/* )} */}
+
+                                  <Button
+                                    sx={{ height: "40px" }}
+                                    variant="contained"
+                                    onClick={() =>
+                                      arrayHelpers.insert(index, {
+                                        placeId: "",
+                                        label: "",
+                                        lat: "",
+                                        lon: "",
+                                        userId: id,
+                                      })
+                                    }
+                                  >
+                                    <AddIcon />
+                                  </Button>
+                                </Stack>
                               </Stack>
                             </div>
                           ))

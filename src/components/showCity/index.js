@@ -1,6 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box } from "@mui/system";
-import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
+import { TablePaginationActions } from "./tablePagination.js";
+import {
+  Button,
+  Divider,
+  Paper,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TablePagination,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
@@ -10,8 +23,11 @@ import Modals from "./modal";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_ALL_CITIES } from "../../graphql/queries";
 import { DELETE_QUERY } from "../../graphql/mutations.js";
+import { boxst, button2, paper1, table1, table2, table3 } from "./styles.js";
 
 const ShowCity = () => {
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [page, setPage] = React.useState(0);
   const user = localStorage.getItem("userId");
 
   const { data, loading, error, refetch } = useQuery(GET_ALL_CITIES, {
@@ -19,6 +35,9 @@ const ShowCity = () => {
       userID: user,
     },
   });
+  useEffect(() => {
+    refetch();
+  }, [data]);
 
   const [deleteCities] = useMutation(DELETE_QUERY);
 
@@ -28,6 +47,17 @@ const ShowCity = () => {
     console.log({ error });
   }
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+    refetch();
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    console.log(event);
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+    refetch();
+  };
   const deleteCurrentCity = (event, city) => {
     deleteCities({
       variables: {
@@ -51,28 +81,9 @@ const ShowCity = () => {
         <Box sx={box2}>
           <Modals />
           <Paper elevation={20} sx={{ padding: "20px", mt: "30px" }}>
-            <Box
-              sx={{
-                mb: 2,
-                display: "flex",
-                flexDirection: "column",
-                height: 500,
-                overflow: "auto",
-                overflowY: "scroll",
-              }}
-            >
+            <Box sx={boxst}>
               {data.cities.length > 0 ? (
-                <Paper
-                  sx={{
-                    padding: "10px",
-                    marginBottom: "16px",
-                    position: "sticky",
-                    top: "0px",
-                    zIndex: 9,
-                    boxShadow: 6,
-                  }}
-                  variant="outlined"
-                >
+                <Paper sx={paper1} variant="outlined">
                   <Stack direction="row" alignItems="center">
                     <Typography
                       sx={{ fontWeight: 600, color: "#0d6efd" }}
@@ -103,52 +114,77 @@ const ShowCity = () => {
                 </Paper>
               )}
               {data.cities.length > 0 && (
-                <Stack direction="column" spacing={2} elevation={20}>
-                  {data.cities.map((city, index) => (
-                    <Paper
-                      className="bg-gray-100"
-                      variant="outlined"
-                      sx={{ padding: "10px" }}
-                    >
-                      <Stack direction="row" alignItems="center">
-                        <Typography flex={3}>{city.label}</Typography>
-                        <Button
-                          flex={1}
-                          variant="contained"
-                          color="primary"
-                          fullWidth
-                          sx={{
-                            display: { xs: "none" },
-                            width: {
-                              xs: 100,
-                              sm: 100,
-                              md: 150,
-                              lg: 200,
-                              xl: 200,
-                            },
-                          }}
-                          onClick={(event) => deleteCurrentCity(event, city)}
-                        >
-                          Delete
-                        </Button>
+                <TableContainer>
+                  <Table
+                    sx={{ minWidth: 500, fontSize: "10px" }}
+                    aria-label="simple table"
+                    overflowX="auto"
+                  >
+                    <TableBody overflowX="auto">
+                      {data.cities
+                        .slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage
+                        )
+                        .map((city, index) => (
+                          <TableRow
+                            key={index}
+                            className="bg-gray-100"
+                            variant="outlined"
+                            sx={{
+                              "&:last-child td, &:last-child th": {
+                                border: 0,
+                                padding: "7px",
+                              },
+                            }}
+                          >
+                            <TableCell overflowX="auto" sx={table1}>
+                              {city.label}
+                            </TableCell>
 
-                        <DeleteIcon
-                          flex={1}
-                          variant="contained"
-                          color="primary"
-                          fullWidth
-                          fontSize="large"
-                          sx={{
-                            display: { xs: "flex" },
-                          }}
-                          onClick={(event) => deleteCurrentCity(event, city)}
-                        />
-                      </Stack>
-                    </Paper>
-                  ))}
-                </Stack>
+                            <TableCell overflowX="auto">
+                              <Button
+                                variant="contained"
+                                color="primary"
+                                fullWidth
+                                sx={table2}
+                                onClick={(event) =>
+                                  deleteCurrentCity(event, city)
+                                }
+                              >
+                                Delete
+                              </Button>
+
+                              <DeleteIcon
+                                overflowX="auto"
+                                variant="contained"
+                                color="primary"
+                                fontSize="large"
+                                sx={table3}
+                                onClick={(event) =>
+                                  deleteCurrentCity(event, city)
+                                }
+                              />
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               )}
             </Box>
+            <TablePagination
+              overflowX="auto"
+              rowsPerPageOptions={[5, 10, 15, 20]}
+              component="div"
+              count={data.cities.length}
+              rowsPerPage={rowsPerPage}
+              colSpan={3}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              ActionsComponent={TablePaginationActions}
+            />
           </Paper>
           <Stack
             sx={{ padding: "4px", mt: 2 }}
@@ -158,14 +194,7 @@ const ShowCity = () => {
             spacing={2}
           >
             <Button
-              sx={{
-                border: "2px white solid",
-                color: "white",
-                width: "180px",
-                "&:hover": {
-                  color: "#fff",
-                },
-              }}
+              sx={button2}
               component={Link}
               to="/SeeWeather"
               variant="outlined"

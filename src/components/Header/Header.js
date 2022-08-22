@@ -9,15 +9,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import LogoutIcon from "@mui/icons-material/Logout";
-
 import MenuItem from "@mui/material/MenuItem";
-
 import AirOutlinedIcon from "@mui/icons-material/AirOutlined";
 import { Link } from "react-router-dom";
-
 import "../../App.css";
 import { Stack } from "@mui/material";
-
+import { button1, button2, logout, logout2, typo, typo2 } from "./styles";
 const pages = ["ADDCITY", "SHOWCITY", "SEEWEATHER"];
 const mdpages = ["ADDCITY", "SHOWCITY", "SEEWEATHER", "LOGIN", "SIGNUP"];
 
@@ -52,18 +49,7 @@ const Header = () => {
           noWrap
           component="a"
           href="/"
-          sx={{
-            mr: 2,
-            display: { xs: "none", md: "flex" },
-            fontFamily: "monospace",
-            fontWeight: 700,
-            letterSpacing: ".3rem",
-            color: "inherit",
-            textDecoration: "none",
-            "&:hover": {
-              color: "#64b5f6",
-            },
-          }}
+          sx={typo}
         >
           WEATHER REPORT
         </Typography>
@@ -151,43 +137,11 @@ const Header = () => {
           </Menu>
         </Box>
 
-        <Typography
-          variant="h5"
-          noWrap
-          component="a"
-          href="/"
-          sx={{
-            mr: 2,
-            display: { xs: "flex", md: "none" },
-            flexGrow: 1,
-            fontSize: 18,
-            fontFamily: "monospace",
-            fontWeight: 700,
-            letterSpacing: ".3rem",
-            color: "inherit",
-            textDecoration: "none",
-          }}
-        >
+        <Typography variant="h5" noWrap component="a" href="/" sx={typo2}>
           WEATHER REPORT
         </Typography>
         {user && (
-          <LogoutIcon
-            sx={{
-              mr: {
-                xs: -4,
-                display: { xs: "flex", md: "none" },
-              },
-              color: "white",
-              boxShadow: "none",
-              "&:hover": {
-                background: "white",
-                color: "#1877f2",
-                boxShadow: "none",
-              },
-            }}
-            onClick={handleLogout}
-            variant="contained"
-          />
+          <LogoutIcon sx={logout} onClick={handleLogout} variant="contained" />
         )}
         <Box sx={{ flexGrow: 0, display: { xs: "none", md: "none" } }}>
           {!user && (
@@ -195,17 +149,7 @@ const Header = () => {
               component={Link}
               to="/Signup"
               variant="outlined"
-              sx={{
-                color: "white",
-                borderColor: "white",
-                my: 2,
-                display: "block",
-                fontStyle: "italic",
-                "&:hover": {
-                  background: "#fff",
-                },
-                width: "85px",
-              }}
+              sx={button1}
             >
               SignUp
             </Button>
@@ -215,37 +159,13 @@ const Header = () => {
               component={Link}
               to="/login"
               variant="outlined"
-              sx={{
-                color: "white",
-                borderColor: "white",
-                my: 2,
-                ml: 1,
-                display: "block",
-                fontStyle: "italic",
-                "&:hover": {
-                  background: "#fff",
-                },
-                width: "85px",
-                justifyContent: "space-between",
-              }}
+              sx={button2}
             >
               Login
             </Button>
           )}
           {user && (
-            <Button
-              sx={{
-                color: "white",
-                boxShadow: "none",
-                "&:hover": {
-                  background: "white",
-                  color: "#1877f2",
-                  boxShadow: "none",
-                },
-              }}
-              onClick={handleLogout}
-              variant="contained"
-            >
+            <Button sx={logout2} onClick={handleLogout} variant="contained">
               Logout
             </Button>
           )}
@@ -257,17 +177,7 @@ const Header = () => {
               component={Link}
               to="/Signup"
               variant="outlined"
-              sx={{
-                color: "white",
-                borderColor: "white",
-                my: 2,
-                display: "block",
-                fontStyle: "italic",
-                "&:hover": {
-                  background: "#fff",
-                },
-                width: "85px",
-              }}
+              sx={button1}
             >
               SignUp
             </Button>
@@ -277,37 +187,13 @@ const Header = () => {
               component={Link}
               to="/login"
               variant="outlined"
-              sx={{
-                color: "white",
-                borderColor: "white",
-                my: 2,
-                ml: 1,
-                display: "block",
-                fontStyle: "italic",
-                "&:hover": {
-                  background: "#fff",
-                },
-                width: "85px",
-                justifyContent: "space-between",
-              }}
+              sx={button2}
             >
               Login
             </Button>
           )}
           {user && (
-            <Button
-              sx={{
-                color: "white",
-                boxShadow: "none",
-                "&:hover": {
-                  background: "white",
-                  color: "#1877f2",
-                  boxShadow: "none",
-                },
-              }}
-              onClick={handleLogout}
-              variant="contained"
-            >
+            <Button sx={logout2} onClick={handleLogout} variant="contained">
               Logout
             </Button>
           )}

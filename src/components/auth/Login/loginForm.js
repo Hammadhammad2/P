@@ -19,6 +19,7 @@ import {
 } from "./constants";
 import { Grid, TextField, Button, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
+import { signup1 } from "../styles";
 
 const LoginForm = (props) => {
   const { touched, errors, loading, values, handleSubmit } = props;
@@ -61,26 +62,7 @@ const LoginForm = (props) => {
             type={_SUBMIT}
             variant={_CONTAINED}
             fullWidth
-            sx={{
-              "&:hover": {
-                md: {
-                  color: "#fff",
-                  background: "#64b5f6",
-                },
-                lg: {
-                  color: "#fff",
-                  background: "#64b5f6",
-                },
-                xl: {
-                  color: "#fff",
-                  background: "#64b5f6",
-                },
-                sm: {
-                  color: "#fff",
-                  background: "#64b5f6",
-                },
-              },
-            }}
+            sx={signup1}
           >
             {loading ? <CircularProgress color={_PRIMARY} size={24} /> : LOGIN}
           </Button>
@@ -93,26 +75,7 @@ const LoginForm = (props) => {
             variant="contained"
             color="primary"
             fullWidth
-            sx={{
-              "&:hover": {
-                md: {
-                  color: "#fff",
-                  background: "#64b5f6",
-                },
-                lg: {
-                  color: "#fff",
-                  background: "#64b5f6",
-                },
-                xl: {
-                  color: "#fff",
-                  background: "#64b5f6",
-                },
-                sm: {
-                  color: "#fff",
-                  background: "#64b5f6",
-                },
-              },
-            }}
+            sx={signup1}
           >
             Sign up
           </Button>

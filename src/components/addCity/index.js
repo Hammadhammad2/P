@@ -10,6 +10,7 @@ import { getCitiesRequest } from "../../services/addCity";
 import { useMutation } from "@apollo/client";
 import { ADD_CITY } from "../../graphql/mutations";
 import { box1, box2 } from "../../styles.js";
+import { paper1, paper2, boxs, b1 } from "./styles";
 
 const City = () => {
   const user = localStorage.getItem("token");
@@ -54,20 +55,7 @@ const City = () => {
   return (
     <Box sx={box1}>
       <Box sx={box2}>
-        <Paper
-          sx={{
-            padding: "20px",
-            marginBottom: "20px",
-            width: {
-              xs: 315,
-              sm: 430,
-              md: 630,
-              lg: 730,
-              xl: 1130,
-            },
-          }}
-          elevation={5}
-        >
+        <Paper sx={paper1} elevation={5}>
           <Autocomplete
             noOptionsText="No Cities Found"
             size="small"
@@ -86,7 +74,6 @@ const City = () => {
                 })
                   .then((res) => {
                     setLocation((prev) => [...prev, newValue]);
-
                     //location.push(newValue);
                   })
                   .catch((error) => {
@@ -96,9 +83,14 @@ const City = () => {
               }
             }}
             inputValue={inputValue}
-            onInputChange={(event, newInputValue) => {
-              setInputValue(newInputValue);
-              setDisplayLocations([]);
+            onInputChange={(event, newInputValue, reason) => {
+              if (reason === "reset") {
+                setInputValue("");
+                return;
+              } else {
+                setInputValue(newInputValue);
+                setDisplayLocations([]);
+              }
             }}
             id="controllable-states-demo"
             options={displayLocations}
@@ -121,29 +113,8 @@ const City = () => {
           )}
         </Paper>
 
-        <Paper
-          sx={{
-            padding: "20px",
-            width: {
-              xs: 315,
-              sm: 430,
-              md: 630,
-              lg: 730,
-              xl: 1130,
-            },
-          }}
-          elevation={5}
-        >
-          <Box
-            sx={{
-              mb: 2,
-              display: "flex",
-              flexDirection: "column",
-              height: 400,
-              overflow: "auto",
-              borderColor: "secondary.main",
-            }}
-          >
+        <Paper sx={paper2} elevation={5}>
+          <Box sx={boxs}>
             {location.length > 0 && (
               <Stack direction="column" spacing={2}>
                 {location.map((loc, index) => (
@@ -172,22 +143,7 @@ const City = () => {
             elevation={0}
             sx={{ mt: 2 }}
           >
-            <Button
-              component={Link}
-              to="/ShowCity"
-              variant="contained"
-              sx={{
-                height: {
-                  xs: "40px",
-                },
-                width: {
-                  xs: "170px",
-                },
-                "&:hover": {
-                  color: "#fff",
-                },
-              }}
-            >
+            <Button component={Link} to="/ShowCity" variant="contained" sx={b1}>
               View All Cities
             </Button>
           </Stack>

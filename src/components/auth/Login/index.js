@@ -10,6 +10,7 @@ import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../../graphql/mutations";
 import { useState } from "react";
 import { _ERROR, _SUCCESS } from "../../../utils/Constants";
+import { loginpaper } from "../styles";
 
 const Login = () => {
   const [LoginUser, { data, loading }] = useMutation(LOGIN_USER);
@@ -48,17 +49,7 @@ const Login = () => {
   return (
     <>
       <Grid align="center">
-        <Paper
-          elevation={10}
-          sx={{
-            padding: "30px 20px",
-            width: {
-              xs: 330,
-              xl: 400,
-            },
-            margin: "150px auto",
-          }}
-        >
+        <Paper elevation={10} sx={loginpaper}>
           <Avatar sx={{ background: "#1877f2" }}>
             <AccountIcon></AccountIcon>
           </Avatar>
