@@ -12,7 +12,8 @@ const phoneRegExp =
 export const SignUpSchema = Yup.object().shape({
   name: Yup.string()
     .required("Please Enter your name")
-    .matches(/^[a-zA-Z].*/, "Name can only contain Latin letters."),
+    .max(40)
+    .matches(/^[A-Za-z ]*$/, "Please enter valid name"),
   phoneno: Yup.string()
     .matches(phoneRegExp, "Phone number is not valid")
     .required("A phone number is required"),

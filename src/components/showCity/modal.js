@@ -62,7 +62,12 @@ const Modals = () => {
 
   return (
     <div>
-      <Button variant="contained" fullWidth onClick={handleClickOpen}>
+      <Button
+        variant="contained"
+        fullWidth
+        onClick={handleClickOpen}
+        sx={{ mb: -3 }}
+      >
         Add More Cities
       </Button>
 
@@ -390,7 +395,7 @@ const Modals = () => {
                         }}
                         severity={_ERROR}
                       >
-                        CITY ALREADY EXISTS
+                        {response}
                       </Alert>
                     </Box>
                   )}
